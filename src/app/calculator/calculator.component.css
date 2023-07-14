@@ -1,0 +1,20 @@
+.body {
+    position: fixed;
+    background-color: #D3D3D3;
+    opacity: 0.2;
+    left: 0;
+    top: 60px;
+    width: 100vw;
+    height: 100vw;
+}
+
+.content {
+    background-image: linear-gradient(to right, #b6fbff, #83a4d4);
+    border: 1px solid black;
+    width: 70%;
+    height: 30%;
+    margin-top: 5%;
+    margin-left: 15%;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

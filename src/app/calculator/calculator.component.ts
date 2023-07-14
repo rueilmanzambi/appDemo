@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css']
 })
+
 export class CalculatorComponent {
 
 }

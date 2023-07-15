@@ -1,0 +1,105 @@
+/*
+.ng-invalid:not(form).ng-touched {
+    border: 1px solid red;
+}*/
+
+.field-error {
+    border: 1px solid red;
+}
+
+.custom-spacing {
+    margin-bottom: 100px;
+}
+
+.total {
+    margin-bottom: 90px;
+}
+
+.ok-btn {
+    margin-bottom: 85px;
+}
+
+.joke{
+    font-style: italic;
+}
+
+.custom-text-color {
+    color: #050130;
+}
+
+.custom-bg {
+    background: linear-gradient(#191cd2, #0c0263);
+}
+
+.custom-field-style {
+    border: inherit;
+    border-bottom: 1px solid #07013d;
+    border-radius: 0px;
+    background: none;
+    line-height: normal;
+    cursor: pointer;
+    outline: none;
+}
+/*
+
+<div>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" class="form-control" [(ngModel)]="calcForm.name" required pattern="B.*" 
+                minlength="3" #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid"
+                (blur)="onBlur(nameField)"/>
+            <div [hidden] = "!form.submitted || nameField.valid" class="alert alert-danger">
+                Enter a name
+            </div> 
+            <label for="bill">Bill</label>
+            <input id="bill" name="bill" class="form-control" [(ngModel)]="calcForm.bill" required />
+        </div>
+        <div class="form-check form-group">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"/>
+            <label class="form-check-label" for="flexCheckIndeterminate">
+              Indeterminate checkbox
+            </label>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="interfaceStyle" id="lightInterface" value="light" checked [(ngModel)]="calcForm.interfaceStyle">
+                <label class="form-check-label" for="lightInterface">
+                light radio
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="interfaceStyle" id="mediumInterface" value="medium" [(ngModel)]="calcForm.interfaceStyle">
+                <label class="form-check-label" for="mediumInterface">
+                medium radio
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="interfaceStyle" id="darkInterface" value="dark" [(ngModel)]="calcForm.interfaceStyle">
+                <label class="form-check-label" for="darkInterface">
+                dark radio
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subscriptionType">Subscription Type</label>
+            <select class="form-control" id="subscriptionType" name="subscriptionType" [(ngModel)]="calcForm.subscriptionType">
+                <option selected>Open this select menu</option>
+                <option value="1">Monthly</option>
+                <option value="2">Annual</option>
+                <option value="3">Lifetime</option>
+              </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="tipslider">Example range</label>
+            <div class="range">
+                <input type="range" class="form-range" min="0" max="100" step="1" name="tipslider" id="tipslider" [(ngModel)]="calcForm.tipslider"/>
+            </div>
+        </div>
+        <button class="btn btn-primary">Ok</button>
+    </form>
+</div>
+    {{calcForm | json}}
+    {{originalCalcForm | json}}
+
+*/

@@ -6,12 +6,15 @@ import { GameComponent } from '../game/game.component';
 import { WeatherComponent } from '../weather/weather.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { GroceryComponent } from '../grocery/grocery.component';
+import { CalcFormComponent } from './calc-form.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    ToolbarComponent,
+    CalcFormComponent
   ],
   imports: [
     RouterModule.forChild([
@@ -20,11 +23,13 @@ import { GroceryComponent } from '../grocery/grocery.component';
       { path: 'calculator', component: CalculatorComponent },
       { path: 'grocery', component: GroceryComponent },
     ]),
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
-    ToolbarComponent
+    ToolbarComponent,
+    CalcFormComponent
   ]
 })
 export class SharedModule { }

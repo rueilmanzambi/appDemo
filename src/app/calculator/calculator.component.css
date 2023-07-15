@@ -1,7 +1,6 @@
 .body {
     position: fixed;
     background-color: #D3D3D3;
-    opacity: 0.2;
     left: 0;
     top: 60px;
     width: 100vw;
@@ -10,7 +9,7 @@
 
 .content {
     background-image: linear-gradient(to right, #b6fbff, #83a4d4);
-    border: 1px solid black;
+    border: 1px solid rgb(155, 152, 199);
     width: 1300px;
     height: 500px;
     border-radius: 20px;
@@ -24,14 +23,19 @@
 
 .calc-header {
     border: 1px solid green;
-    width: 15%;
+    width: 20%;
     font-weight:bolder;
-    color: rgba(0, 0, 0, 1);
+    font-size: larger;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgb(10, 1, 87);
     z-index: 1;
     text-align: center;
-
+    position: fixed;
+    left: 40%;
 }
 
 .calc-body {
     border: 1px solid green;
+    height: 420px;
+    margin-top: 40px;
 }

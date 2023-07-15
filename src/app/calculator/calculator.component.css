@@ -36,7 +36,7 @@
 .calc-body {
     height: 420px;
     margin-top: 40px;
-    display: flex;
+    display: fixed;
     padding: 50px 60px 10px 50px;
 }
 

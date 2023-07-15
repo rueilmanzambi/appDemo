@@ -9,20 +9,30 @@ import { NgForm, NgModel } from '@angular/forms';
 })
 export class CalcFormComponent implements OnInit{
   originalCalcForm: CalcFormProp = {
-    name: "null",
-    bill: 0,
-    interfaceStyle: "null",
-    subscriptionType: "null",
-    tipslider: 0
+    bill: 0.00,
+    tipslider: 0.00,
   }
-
   calcForm: CalcFormProp = { ...this.originalCalcForm };
+
+  billAmt: number = 0.00;
+  tax: number = this.calcForm.bill;
+  tipPerc: number = 0.00;
+  tipAmt: number = 0.00;
+  total: number = 0.00;
 
   ngOnInit(){
   }
 
   onBlur(field: NgModel) {
-    console.log('in onBlur: ', field.valid);
+    console.log('in onBlur: ', field.value);
+  }
+
+  updateBill(): void {
+    this.billAmt = this.calcForm.bill;
+    this.tax = this.billAmt * 0.0314;
+    this.tipPerc = this.calcForm.tipslider;
+    this.tipAmt = (this.billAmt * this.calcForm.tipslider) / 100;
+    this.total = Number(this.billAmt) + parseFloat(this.tax.toFixed(2)) + parseFloat(this.tipAmt.toFixed(2));
   }
 
   onSubmit(form: NgForm) {

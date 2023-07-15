@@ -3,32 +3,32 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="row custom-spacing">
-                    <label for="bill" class="col-sm-4 col-form-label  custom-text-color fw-bolder ">Bill</label>
+                    <label for="bill" class="col-sm-4 col-form-label  custom-text-color fw-bolder ">Bill ($)</label>
                     <div class="col-sm-8 ">
                         <input id="bill" name="bill" class="form-control text-end fw-bolder custom-field-style" [(ngModel)]="calcForm.bill" 
-                            required placeholder="Enter amount" />
+                            required placeholder="Enter amount" #billField="ngModel" (blur)="onBlur(billField)" (input)="updateBill()"/>
                     </div>
                 </div>
                 <div class="row custom-spacing">
                     <label for="tax"  class="col-sm-4 col-form-label custom-text-color fw-bolder">Tax (3.14%)</label>
-                    <div class="col-sm-8  text-end custom-text-color fw-bolder custom-field-style"><label id="tax" name="tax"> 777474</label></div>
+                    <div class="col-sm-8  text-end custom-text-color fw-bolder custom-field-style"><label id="tax" name="tax">$ {{tax | number:'1.2-2' }}</label></div>
                 </div>
                 <div class="row">
-                    <label id="tipLabel" name="tipLabel" class="col-sm-3 col-form-label custom-text-color fw-bolder"> Tip </label>
-                    <div class="col-sm-3">
-                        <input type="range" class="form-range " min="0" max="100" step="1" 
-                        name="tipslider" id="tipslider" [(ngModel)]="calcForm.tipslider"/>
+                    <label id="tipLabel" name="tipLabel" class="col-sm-2 col-form-label custom-text-color fw-bolder"> Tip </label>
+                    <div class="col-sm-5">
+                        <input type="range" class="form-range " min="0" max="100" step="0.5" 
+                        name="tipslider" id="tipslider" [(ngModel)]="calcForm.tipslider" (input)="updateBill()"/>
                     </div>
-                    <label id="tipPerc" name="tipPerc" class="col-sm-3  text-end custom-text-color fw-bolder custom-field-style"> Number %</label>
-                    <label id="tipAmount" name="tipAmount" class="col-sm-3  text-end custom-text-color fw-bolder custom-field-style"> Amount tipped </label>
+                    <label id="tipPerc" name="tipPerc" class="col-sm-2  text-end custom-text-color fw-bolder custom-field-style"> {{tipPerc | number:'1.1-1' }} %</label>
+                    <label id="tipAmount" name="tipAmount" class="col-sm-3  text-end custom-text-color fw-bolder custom-field-style"> $ {{tipAmt | number:'1.2-2' }} </label>
                 </div>  
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <div class="row total">
-                    <label id="totalLabel" name="totalLabel" class="col-sm-4 col-form-label custom-text-color fw-bolder">Total</label>
-                    <div class="col-sm-8  text-end custom-text-color fw-bolder custom-field-style"><label id="total" name="total"> 777474</label></div>
+                    <label id="totalLabel" name="totalLabel" class="col-sm-4 col-form-label custom-text-color fw-bolder">Total ($)</label>
+                    <div class="col-sm-8  text-end custom-text-color fw-bolder custom-field-style"><label id="total" name="total"> {{total | number:'0.2-2' }} </label></div>
                 </div>
                 <div class="text-center custom-text-color fw-bolder"><button class="btn btn-primary w-75 ok-btn custom-bg fw-bold ">Pay</button></div>
                 <div class="joke custom-text-color fw-bold">What was Sir Isaac Newton's favorite dessert? <br/>Apple pi-e!</div>
@@ -36,5 +36,3 @@
         </div>
     </form>
 </div>
-    {{calcForm | json}}
-    {{originalCalcForm | json}}

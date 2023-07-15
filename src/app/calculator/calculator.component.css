@@ -13,10 +13,13 @@
     border: 1px solid black;
     width: 1300px;
     height: 500px;
-    margin: 250px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 1%;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .calc-header {

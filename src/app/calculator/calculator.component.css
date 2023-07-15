@@ -11,10 +11,24 @@
 .content {
     background-image: linear-gradient(to right, #b6fbff, #83a4d4);
     border: 1px solid black;
-    width: 70%;
-    height: 30%;
-    margin-top: 5%;
-    margin-left: 15%;
+    width: 1300px;
+    height: 500px;
+    margin: 250px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 1%;
+}
+
+.calc-header {
+    border: 1px solid green;
+    width: 15%;
+    font-weight:bolder;
+    color: rgba(0, 0, 0, 1);
+    z-index: 1;
+    text-align: center;
+
+}
+
+.calc-body {
+    border: 1px solid green;
 }

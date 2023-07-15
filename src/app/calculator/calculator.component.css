@@ -22,7 +22,6 @@
 }
 
 .calc-header {
-    border: 1px solid green;
     width: 20%;
     font-weight:bolder;
     font-size: larger;
@@ -35,7 +34,6 @@
 }
 
 .calc-body {
-    border: 1px solid green;
     height: 420px;
     margin-top: 40px;
     display: flex;

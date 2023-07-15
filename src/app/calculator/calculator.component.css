@@ -27,7 +27,7 @@
     font-weight:bolder;
     font-size: larger;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: rgb(10, 1, 87);
+    color: #0a0157;
     z-index: 1;
     text-align: center;
     position: fixed;
@@ -38,4 +38,17 @@
     border: 1px solid green;
     height: 420px;
     margin-top: 40px;
+    display: flex;
+    padding: 50px 60px 10px 50px;
+}
+
+.left-side {
+    border: 1px solid green;
+    width: 640px;
+}
+
+.right-side {
+    border: 1px solid green;
+    width: 640px;
+    
 }

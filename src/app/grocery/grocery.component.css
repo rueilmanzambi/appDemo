@@ -12,11 +12,11 @@
     background-image: linear-gradient(to right, #b6fbff, #83a4d4);
     border: 1px solid rgb(155, 152, 199);
     width: 700px;
-    height: 700px;
+    height: 500px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
-    position: fixed;
+    position:fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

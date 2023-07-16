@@ -37,13 +37,17 @@
     font-weight: 750;
   }
 
-  .toolbar a{
+  .toolbar a:first-child{
+    color: white;
+  }
+
+  .toolbar a:nth-child(n+2){
     color: white;
     margin: 5px 10px;
     transition: 0.1s;
     border-radius: 5px;
   }
-  .toolbar a:hover{
+  .toolbar a:nth-child(n+2):hover{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     font-weight: 900;
   }

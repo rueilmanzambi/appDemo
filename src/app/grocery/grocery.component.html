@@ -1,1 +1,35 @@
-<p>grocery works!</p>
+<pm-toolbar></pm-toolbar>
+<div class="body">
+    <div class="content">
+            <div class="list-header">
+                Old Town Grocery Store
+            </div>
+            <div class="list-body">
+                <div class="row">
+                    <div class="col-xs-6 col-md-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control entry-field-style" name="task" placeholder="Enter an item" 
+                                [(ngModel)]="task"  id="task"/>
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary custom-bg" type="button" (click)="onClick(task)">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <ul class="list-group ">
+                        <li *ngFor="let task of tasks; let i=index" class="list-group-item custom-field-style">
+                            <div *ngIf="task">
+                                <span class="task"> {{ task }} </span>
+                                <div class="action">
+                                    <input type="checkbox" class="checkbox" id="myCheckbox">
+                                    <i class="fas fa-trash-alt fa-xs trash-button" (click)="onDelete(i)"></i>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+            </div>
+    </div>
+</div>

@@ -29,6 +29,7 @@
     float: left;
     border: 1px solid red;
     height: 100%;
+    padding: 10px;
 }
 .input-section {
     display: flex;
@@ -41,7 +42,74 @@
 .button {
     margin-left: -5px;
 }
-
+.today-main {
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 5px;
+    height: 582px;
+}
+.today-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.today-main-img{
+    border: 1px solid red;
+    margin-bottom: 10px;
+}
+.temparatureMain {
+    border: 1px solid yellow;
+    width: 250px;
+    height: 90px;
+    margin-bottom: 10px;
+}
+.day-time {
+    border: 1px solid red;
+    width: 250px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+.today-other {
+    margin-bottom: 10px;
+    width: 250px;
+}
+.cityImg{
+    border: 1px solid black;
+    width: 250px;
+    height: 93px;
+}
+.week-prevision {
+    border: 1px solid black;
+    height: 190px;
+    display: flex;
+    padding: 5px;
+}
+.day-prevision {
+    flex: 1;
+    border: 1px solid red;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.highlightBox {
+    margin-top: 15px;
+    border: 1px solid red;
+    height: 365px;
+    display: flex;
+    flex-direction: column;
+}
+.highlightRow {
+    display: flex;
+}
+.highlightDivs {
+    flex: 1;
+    border: 1px solid black;
+    margin: 5px;
+    height: 170px;
+}
 /*
 <input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode" 
                                 [(ngModel)]="location"  id="location"/>

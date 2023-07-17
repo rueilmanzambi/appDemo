@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent {
-
+  todayMainImg: string = 'assets/images/temp.webp';
 }

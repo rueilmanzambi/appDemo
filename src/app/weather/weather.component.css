@@ -14,8 +14,9 @@
     height: 650px;
     overflow: hidden;
     margin: 10px;
-    align-self: center;
-    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .column-one {

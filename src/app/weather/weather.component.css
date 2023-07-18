@@ -1,6 +1,6 @@
 .body {
     position: fixed;
-    background-color: #D3D3D3;
+    background-color: #dfdfdf;
     left: 0;
     top: 60px;
     width: 100vw;
@@ -23,6 +23,7 @@
     border: 1px solid green;
     height: 100%;
     padding: 10px;
+    background-color: rgb(255, 255, 255);
 }
 .column-two {
     width: 65%;

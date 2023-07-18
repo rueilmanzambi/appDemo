@@ -3,7 +3,7 @@
     <div class="content">
         <div class="column-one">
             <div class="input-section">
-                <input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode" 
+                <input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode or city" 
                         id="location"/>
                 <button class="btn btn-primary button" type="button">Search</button>
             </div>
@@ -11,19 +11,19 @@
                 <div class="today-wrapper">
                     <img [src]="todayMainImg" style="width: 250px; height: 250px;" alt="today-img" class="today-main-img">
                     <div class="temparatureMain">
-                        Temperature
+                        {{todayTemp}}
                     </div>
                     <div class="day-time">
-                        day and time
+                        {{todayDay}}, {{todayDate}}
                     </div>
                     <div class="today-other">
-                        mostly cloudy
+                        {{todaySituation}}
                     </div>
                     <div class="today-other">
-                        mostly cloudy
+                        {{todaySituationTwo}}
                     </div>
                     <div class="cityImg">
-                        <img [src]="todayMainImg" style="width: 50px; height: 50px;" alt="city-img">
+                        <img [src]="cityPic" style="width: 50px; height: 50px;" alt="city-img">
                     </div>
                 </div>
             </div>
@@ -32,38 +32,38 @@
             <div class="week-prevision">
                 <div class="day-prevision">
                     <div class="dayname">
-                        tomorrow
+                        {{tomrwName}}
                     </div>
-                    <img [src]="todayMainImg" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <img [src]="tomrwIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        week-temp
+                        {{tomrwTemp}}
                     </div>
                 </div>
                 <div class="day-prevision">
                     <div class="dayname">
-                        dayafter
+                        {{thirdDayName}}
                     </div>
-                    <img [src]="todayMainImg" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <img [src]="thirdDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        week-temp
+                        {{thirdDayTemp}}
                     </div>
                 </div>
                 <div class="day-prevision">
                     <div class="dayname">
-                        nextday
+                        {{fourthDayName}}
                     </div>
-                    <img [src]="todayMainImg" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <img [src]="fourthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        week-temp
+                        {{fourthDayTemp}}
                     </div>
                 </div>
                 <div class="day-prevision">
                     <div class="dayname">
-                        lastday
+                        {{fifthDayName}}
                     </div>
-                    <img [src]="todayMainImg" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <img [src]="fifthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        week-temp
+                        {{fifthDayTemp}}
                     </div>
                 </div>
             </div>

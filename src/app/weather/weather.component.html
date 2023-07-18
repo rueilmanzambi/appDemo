@@ -12,19 +12,19 @@
                 <div class="today-wrapper">
                     <img [src]="todayMainImg" style="width: 250px; height: 250px;" alt="today-img" class="today-main-img">
                     <div class="temparatureMain">
-                        {{todayTemp}}
+                        {{todayTemp}}&deg;f
                     </div>
                     <div class="day-time">
-                        {{todayDay}}, {{todayDate}}
+                        {{todayDay}}, {{todayTime}}
                     </div>
                     <div class="today-other">
                         {{todaySituation}}
                     </div>
                     <div class="today-other">
-                        {{todaySituationTwo}}
+                        Chance of rain: {{todaySituationTwo}}%
                     </div>
                     <div class="cityImg">
-                        <label style="font-weight: bolder;">City</label>
+                        <label style="font-weight: bolder;" class="cityName">{{locationName}}, {{locationRegion}}</label>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <img [src]="tomrwIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        {{tomrwTemp}}
+                        {{tomrwTemp}}&deg;f
                     </div>
                 </div>
                 <div class="day-prevision">
@@ -46,7 +46,7 @@
                     </div>
                     <img [src]="thirdDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        {{thirdDayTemp}}
+                        {{thirdDayTemp}}&deg;f
                     </div>
                 </div>
                 <div class="day-prevision">
@@ -55,7 +55,7 @@
                     </div>
                     <img [src]="fourthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        {{fourthDayTemp}}
+                        {{fourthDayTemp}}&deg;f
                     </div>
                 </div>
                 <div class="day-prevision">
@@ -64,7 +64,7 @@
                     </div>
                     <img [src]="fifthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
-                        {{fifthDayTemp}}
+                        {{fifthDayTemp}}&deg;f
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                         <label class="highlightDivTitle">Wind Status</label>
                         <div class="highlightDivFact">
                             <img [src]="windStatusPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
-                            <div>{{windStatus}}</div>
+                            <div>{{windStatus}} mph</div>
                         </div>
                     </div>
                     <div class="highlightDivs">
@@ -98,21 +98,21 @@
                         <label class="highlightDivTitle">Humidity</label>
                         <div class="highlightDivFact">
                             <img [src]="humidityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
-                            <div>{{humidity}}</div>
+                            <div>{{humidity}}%</div>
                         </div>
                     </div>
                     <div class="highlightDivs">
                         <label class="highlightDivTitle">Visibility</label>
                         <div class="highlightDivFact">
                             <img [src]="visibilityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
-                            <div>{{visibility}}</div>
+                            <div>{{visibility}} mile(s)</div>
                         </div>
                     </div>
                     <div class="highlightDivs">
                         <label class="highlightDivTitle">Chance of snow</label>
                         <div class="highlightDivFact">
                             <img [src]="snowPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
-                            <div>{{snowChance}}</div>
+                            <div>{{snowChance}}%</div>
                         </div>
                     </div>
                 </div>

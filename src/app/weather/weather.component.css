@@ -1,12 +1,15 @@
 .body {
     position: fixed;
-    background-color: #dfdfdf;
     left: 0;
     top: 60px;
     width: 100vw;
     height: 100vw;
     justify-content: center;
     align-items: center;
+    background-image: url("src/assets/images/weatherBg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .content {
     width: 1100px;
@@ -78,9 +81,12 @@
     height: 90px;
     margin-bottom: 10px;
     font-weight: bolder;
-    font-size: 70px;
+    font-size: 60px;
     border-radius: 30px;
     background-color: white;
+    padding-left: 5px;
+    padding-top: 0px; 
+    text-align: center;
 }
 .day-time {
     width: 250px;
@@ -89,6 +95,7 @@
     font-weight: bolder;
     border-radius: 30px;
     background-color: white;
+    padding: 5px;
 }
 .today-other {
     margin-bottom: 10px;
@@ -96,13 +103,19 @@
     font-weight: bold;
     border-radius: 30px;
     background-color: white;
+    padding-left: 5px;
 }
 .cityImg{
     width: 250px;
     height: 93px;
     border-radius: 30px;
     background-color: white;
-    background-image: url("src/assets/images/cityPic.jpg");
+    background-image: url("src/assets/images/cityPic.webp");
+    text-align: center;
+    padding-top: 30px;
+}
+.cityName {
+    text-align: center;
 }
 .week-prevision {
     height: 190px;

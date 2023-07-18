@@ -10,10 +10,15 @@ import { WeatherService } from './weather.service';
 export class WeatherComponent {
 
   location: string = '';
+  locationName: string = '';
+  locationRegion: string = '';
 
   todayMainImg: string = '';
   todayTemp: string = '';
   todayDate: string = '';
+  todayTime: string = '';
+  lat: string = '';
+  lon: string = '';
   todaySituation: string = '';
   todaySituationTwo: string = '';
   todayLocation: string = '';
@@ -64,6 +69,12 @@ export class WeatherComponent {
       .subscribe(data => {
 
         this.weatherForecast = data.forecast.forecastday;
+
+        this.locationName = data.location.name;
+        this.locationRegion = data.location.region;
+        //this.locationRegion = JSON.stringify(data.location.localtime);
+        console.log("location name: " + this.locationRegion);
+
         this.todayMainImg = data.forecast.forecastday[0].day.condition.icon;
         this.todayTemp = data.forecast.forecastday[0].day.avgtemp_f;
         this.todayDate = data.forecast.forecastday[0].date;
@@ -71,6 +82,8 @@ export class WeatherComponent {
         this.todayLocation = data.forecast.forecastday.location;
         this.todaySituationTwo = data.forecast.forecastday[0].day.daily_chance_of_rain;
         this.todayDay = this.getDayName(this.todayDate);
+        this.todayTime = new Date().toLocaleString('en-US', { timeZone: data.location.tz_id });
+        this.todayTime = this.todayTime.substring(this.todayTime.indexOf(',') + 1).trim();
 
         this.tomrwName = this.getDayName(data.forecast.forecastday[1].date);
         this.tomrwIcon = data.forecast.forecastday[1].day.condition.icon;
@@ -95,6 +108,11 @@ export class WeatherComponent {
         this.humidity = data.forecast.forecastday[0].day.avghumidity;
         this.visibility = data.forecast.forecastday[0].day.avgvis_miles;
         this.snowChance = data.forecast.forecastday[0].day.daily_chance_of_snow;
+
+        this.lat = data.location.lat;
+        this.lon = data.location.lon;
+        //this.todayTime =  new Date().toLocaleTimeString('en-US', { timeZone: `Etc/GMT+${this.lon}` });
+        
 
         console.log(this.weatherForecast);
       })

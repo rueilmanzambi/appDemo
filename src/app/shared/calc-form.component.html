@@ -5,7 +5,7 @@
                 <div class="row custom-spacing">
                     <label for="bill" class="col-sm-4 col-form-label  custom-text-color fw-bolder ">Bill ($)</label>
                     <div class="col-sm-8 ">
-                        <input id="bill" name="bill" class="form-control text-end fw-bolder custom-field-style" [(ngModel)]="calcForm.bill" 
+                        <input id="bill" name="bill" class="form-control text-end fw-bolder bill-field-style" [(ngModel)]="calcForm.bill" 
                             required placeholder="Enter amount" #billField="ngModel" (blur)="onBlur(billField)" (input)="updateBill()"/>
                     </div>
                 </div>

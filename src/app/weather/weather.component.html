@@ -1,1 +1,122 @@
-<p>weather works!</p>
+<pm-toolbar></pm-toolbar>
+<div class="body">
+    <div class="content">
+        <div class="column-one">
+            <div class="input-section">
+                <input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode or city" 
+                        id="location"  [(ngModel)]="location" />
+                <button class="btn btn-primary button" style="background: linear-gradient(#191cd2, #0c0263);  border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
+                     type="button" (click)="OnClick(location)">Search</button>
+            </div>
+            <div class="today-main">
+                <div class="today-wrapper">
+                    <img [src]="todayMainImg" style="width: 250px; height: 250px;" alt="today-img" class="today-main-img">
+                    <div class="temparatureMain">
+                        {{todayTemp}}&deg;f
+                    </div>
+                    <div class="day-time">
+                        {{todayDay}}, {{todayTime}}
+                    </div>
+                    <div class="today-other">
+                        {{todaySituation}}
+                    </div>
+                    <div class="today-other">
+                        Chance of rain: {{todaySituationTwo}}%
+                    </div>
+                    <div class="cityImg">
+                        <label style="font-weight: bolder;" class="cityName">{{locationName}}, {{locationRegion}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-two">
+            <div class="week-prevision">
+                <div class="day-prevision">
+                    <div class="dayname">
+                        Tomorrow
+                    </div>
+                    <img [src]="tomrwIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <div class="week-temp">
+                        {{tomrwTemp}}&deg;f
+                    </div>
+                </div>
+                <div class="day-prevision">
+                    <div class="dayname">
+                        {{thirdDayName}}
+                    </div>
+                    <img [src]="thirdDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <div class="week-temp">
+                        {{thirdDayTemp}}&deg;f
+                    </div>
+                </div>
+                <div class="day-prevision">
+                    <div class="dayname">
+                        {{fourthDayName}}
+                    </div>
+                    <img [src]="fourthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <div class="week-temp">
+                        {{fourthDayTemp}}&deg;f
+                    </div>
+                </div>
+                <div class="day-prevision">
+                    <div class="dayname">
+                        {{fifthDayName}}
+                    </div>
+                    <img [src]="fifthDayIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
+                    <div class="week-temp">
+                        {{fifthDayTemp}}&deg;f
+                    </div>
+                </div>
+            </div>
+            <label class="highlightLabel" style="margin-top: 30px; font-weight: bolder; font-size:x-large;">Today's Highlights</label>
+            <div class="highlightBox">
+                <div class="highlightRow">
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">UV Index</label>
+                        <div class="highlightDivFact">
+                            <img [src]="uvPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{uvIndex}}</div>
+                        </div>
+                    </div>
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">Wind Status</label>
+                        <div class="highlightDivFact">
+                            <img [src]="windStatusPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{windStatus}} mph</div>
+                        </div>
+                    </div>
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">Sunrise & Sunset</label>
+                        <div class="highlightDivFact">
+                            <img [src]="sunPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{sunRise}} & {{sunSet}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlightRow">
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">Humidity</label>
+                        <div class="highlightDivFact">
+                            <img [src]="humidityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{humidity}}%</div>
+                        </div>
+                    </div>
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">Visibility</label>
+                        <div class="highlightDivFact">
+                            <img [src]="visibilityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{visibility}} mile(s)</div>
+                        </div>
+                    </div>
+                    <div class="highlightDivs">
+                        <label class="highlightDivTitle">Chance of snow</label>
+                        <div class="highlightDivFact">
+                            <img [src]="snowPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{snowChance}}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

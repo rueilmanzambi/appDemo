@@ -1,0 +1,157 @@
+.body {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    width: 100vw;
+    height: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-image: url("src/assets/images/weatherBg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.content {
+    width: 1100px;
+    height: 650px;
+    overflow: hidden;
+    margin: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 40px;
+}
+.column-one {
+    width: 35%;
+    float: left;
+    height: 100%;
+    padding: 10px;
+    background-color: white;
+}
+.column-two {
+    width: 65%;
+    float: left;
+    height: 100%;
+    padding: 10px;
+    background-color: #eeeeee;
+    position: relative;
+}
+.input-section {
+    display: flex;
+    align-items: center;
+}
+.entry-field-style {
+    flex: 1;
+    padding: 5px;
+    background-color: #eeeeee;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    height: 38px;
+}
+.button {
+    margin-left: -5px;
+}
+.today-main {
+    width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 5px;
+    height: 582px;
+    background-color: #eeeeee;
+    border-radius: 30px;
+    padding: 5px;
+    position: absolute;
+
+
+  transform: translate(8%);
+}
+.today-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.today-main-img{
+    margin-bottom: 10px;
+    border-radius: 30px;
+    background-color: white;
+}
+.temparatureMain {
+    width: 250px;
+    height: 90px;
+    margin-bottom: 10px;
+    font-weight: bolder;
+    font-size: 60px;
+    border-radius: 30px;
+    background-color: white;
+    padding-left: 5px;
+    padding-top: 0px; 
+    text-align: center;
+}
+.day-time {
+    width: 250px;
+    height: 40px;
+    margin-bottom: 10px;
+    font-weight: bolder;
+    border-radius: 30px;
+    background-color: white;
+    padding: 5px;
+}
+.today-other {
+    margin-bottom: 10px;
+    width: 250px;
+    font-weight: bold;
+    border-radius: 30px;
+    background-color: white;
+    padding-left: 5px;
+}
+.cityImg{
+    width: 250px;
+    height: 93px;
+    border-radius: 30px;
+    background-color: white;
+    background-image: url("src/assets/images/cityPic.webp");
+    text-align: center;
+    padding-top: 30px;
+}
+.cityName {
+    text-align: center;
+}
+.week-prevision {
+    height: 190px;
+    display: flex;
+    padding: 5px;
+}
+.day-prevision {
+    flex: 1;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px;
+    font-weight: bolder;
+}
+.highlightBox {
+    margin-top: 15px;
+    height: 365px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bolder;
+}
+.highlightRow {
+    display: flex;
+}
+.highlightDivs {
+    flex: 1;
+    background-color: white;
+    margin: 5px;
+    height: 170px;
+    padding: 5px;
+    border-radius: 20px;
+}
+/*
+<input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode" 
+                                [(ngModel)]="location"  id="location"/>
+*/

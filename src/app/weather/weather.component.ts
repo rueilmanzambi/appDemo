@@ -8,6 +8,9 @@ import { WeatherService } from './weather.service';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent {
+
+  location: string = '';
+
   todayMainImg: string = '';
   todayTemp: string = '';
   todayDate: string = '';
@@ -15,7 +18,14 @@ export class WeatherComponent {
   todaySituationTwo: string = '';
   todayLocation: string = '';
   todayDay: string = '';
+
   cityPic: string = '/assets/images/cityPic.jpg';
+  uvPic: string = '/assets/images/uvIndex.jpg';
+  windStatusPic: string ='/assets/images/wind.png';
+  sunPic: string = '/assets/images/sun.png';
+  humidityPic: string = '/assets/images/humidity.png';
+  visibilityPic: string = '/assets/images/visibility.jpg';
+  snowPic: string = '/assets/images/snow.png';
 
   tomrwName: string= '';
   tomrwIcon: string= '';
@@ -33,10 +43,21 @@ export class WeatherComponent {
   fifthDayIcon: string= '';
   fifthDayTemp: string= '';
 
+  uvIndex: string = '';
+  windStatus: string = '';
+  sunRise: string = '';
+  sunSet: string = '';
+  humidity: string ='';
+  visibility: string = '';
+  snowChance: string = '';
+
   weatherForecast: any;
   constructor(private weatherService: WeatherService) {}
   ngOnInit(): void {
-    this.getWeatherForecast('Chicago');
+    this.getWeatherForecast('Matadi');
+  }
+  OnClick(location: string){
+    this.getWeatherForecast(location);
   }
   getWeatherForecast(city: string): void {
     this.weatherService.getWeatherForecast(city)
@@ -66,6 +87,14 @@ export class WeatherComponent {
         this.fifthDayName = this.getDayName(data.forecast.forecastday[4].date);
         this.fifthDayIcon = data.forecast.forecastday[4].day.condition.icon;
         this.fifthDayTemp = data.forecast.forecastday[4].day.avgtemp_f;
+
+        this.uvIndex = data.forecast.forecastday[0].day.uv;
+        this.windStatus = data.forecast.forecastday[0].day.maxwind_mph;
+        this.sunRise = data.forecast.forecastday[0].astro.sunrise;
+        this.sunSet = data.forecast.forecastday[0].astro.sunset;
+        this.humidity = data.forecast.forecastday[0].day.avghumidity;
+        this.visibility = data.forecast.forecastday[0].day.avgvis_miles;
+        this.snowChance = data.forecast.forecastday[0].day.daily_chance_of_snow;
 
         console.log(this.weatherForecast);
       })

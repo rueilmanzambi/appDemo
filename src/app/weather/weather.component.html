@@ -4,8 +4,9 @@
         <div class="column-one">
             <div class="input-section">
                 <input type="text" class="form-control entry-field-style" name="location" placeholder="Enter a zipcode or city" 
-                        id="location"/>
-                <button class="btn btn-primary button" type="button">Search</button>
+                        id="location"  [(ngModel)]="location" />
+                <button class="btn btn-primary button" style="background: linear-gradient(#191cd2, #0c0263);  border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
+                     type="button" (click)="OnClick(location)">Search</button>
             </div>
             <div class="today-main">
                 <div class="today-wrapper">
@@ -23,7 +24,7 @@
                         {{todaySituationTwo}}
                     </div>
                     <div class="cityImg">
-                        <img [src]="cityPic" style="width: 50px; height: 50px;" alt="city-img">
+                        <label style="font-weight: bolder;">City</label>
                     </div>
                 </div>
             </div>
@@ -32,7 +33,7 @@
             <div class="week-prevision">
                 <div class="day-prevision">
                     <div class="dayname">
-                        {{tomrwName}}
+                        Tomorrow
                     </div>
                     <img [src]="tomrwIcon" style="width: 100px; height: 100px;" alt="wkTempImg">
                     <div class="week-temp">
@@ -67,34 +68,52 @@
                     </div>
                 </div>
             </div>
-            <label class="highlightLabel" style="margin-top: 30px;">Today's Highlight</label>
+            <label class="highlightLabel" style="margin-top: 30px; font-weight: bolder; font-size:x-large;">Today's Highlights</label>
             <div class="highlightBox">
                 <div class="highlightRow">
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">UV Index</label>
+                        <div class="highlightDivFact">
+                            <img [src]="uvPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{uvIndex}}</div>
+                        </div>
                     </div>
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">Wind Status</label>
+                        <div class="highlightDivFact">
+                            <img [src]="windStatusPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{windStatus}}</div>
+                        </div>
                     </div>
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">Sunrise & Sunset</label>
+                        <div class="highlightDivFact">
+                            <img [src]="sunPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{sunRise}} & {{sunSet}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="highlightRow">
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">Humidity</label>
+                        <div class="highlightDivFact">
+                            <img [src]="humidityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{humidity}}</div>
+                        </div>
                     </div>
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">Visibility</label>
+                        <div class="highlightDivFact">
+                            <img [src]="visibilityPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{visibility}}</div>
+                        </div>
                     </div>
                     <div class="highlightDivs">
-                        <label class="highlightDivTitle">Title</label>
-                        <div class="highlightDivFact">fact</div>
+                        <label class="highlightDivTitle">Chance of snow</label>
+                        <div class="highlightDivFact">
+                            <img [src]="snowPic" style="width: 110px; height: 110px;" alt="highlightImg" class="highlightImg">
+                            <div>{{snowChance}}</div>
+                        </div>
                     </div>
                 </div>
             </div>

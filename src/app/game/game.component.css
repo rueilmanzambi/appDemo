@@ -1,0 +1,27 @@
+
+body{ 
+    width:100%; 
+    overflow-x: hidden;
+}
+
+.yypage-background {
+    margin-top : 60px;
+    border : 1px solid red;
+    background-image: url('src/assets/images/cityPic.webp');
+    width: 100vw;
+    margin-left: 0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Adjust other background properties as needed */
+  }
+
+  .page-background {
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-top : 60px;
+    border : 1px solid red;
+    max-width: 100vw;
+    height: 1000px;
+    /* Adjust other background properties as needed */
+  }

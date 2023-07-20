@@ -267,7 +267,7 @@ html, body {
 .additionalRuleScreen {
   padding-top: 0px;
   position: absolute;
-  opacity: 0; /*To make rule screen dis-appear  */
+  opacity: 0;/* To make rule screen dis-appear  */
 }
 
 .addTypeRules {
@@ -350,8 +350,12 @@ html, body {
 
 .levelOneScreen {
   border : 1px solid red;
-  width: 100%;
+  height: 620px;
+  width: 1240px;
   display: flex;
+  padding-top: 20px;
+  position: absolute;
+  opacity: 0; /*To make rule screen dis-appear  */
 }
 
 .leftPanel {
@@ -476,3 +480,221 @@ html, body {
 .rightPanel ul {
   border: 1px solid black;
 }
+
+/**********************level two screen *************/
+
+.levelTwoScreen {
+  border : 1px solid red;
+  height: 620px;
+  width: 1240px;
+  display: flex;
+  padding-top: 20px;
+  position: absolute;
+  opacity: 0;/**/
+}
+.leftPanelF {
+  border: 1px solid green;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.leftTopF, .leftBottomF{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+}
+.mainPanelF {
+  border: 1px solid yellow;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+.mainSecF, .mainThirdF, .mainFourthF {
+  flex: 1;
+  display: flex;
+}
+.aiPlayF {
+  border: 1px solid red;
+  height: 100px;
+  width: 450px;
+  padding-top: 30px;
+  margin-right: 60%;
+  margin-top: 5%;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.yourPlayF {
+  border: 1px solid red;
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  margin-left: 45%;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.playResultF {
+  border: 1px solid red;
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+.mainTopF, .mainBottomF {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainTopF {
+  flex-direction: column;
+}
+.mainBottomF {
+  border: 1px solid black;
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.playerOptionF {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+}
+
+.rockF {
+  border: 1px solid green;
+}
+.paperF {
+  border: 1px solid red;
+}
+.scissorsF {
+  border: 1px solid purple;
+}
+
+
+.rightPanelF {
+  border: 1px solid black;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.rightTopF, .rightBottomF {
+  flex: 1;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
+.rightBottomF {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightPanelF ul {
+  border: 1px solid black;
+}
+
+
+/************** final screen ************/
+.finalScreen {
+  border : 1px solid red;
+  width: 100%;
+  display: flex;
+ opacity: 0; /**/
+}
+
+  .endScreen {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    
+    margin-right: 50%;
+    /*opacity: 0; To make welcome screen dis-appear  */
+  }
+  .endMsg {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #eae8ee 0%,
+    #c72060 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:xx-large;
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  
+  .endTitle {
+    text-align: center;
+    font-size: 40px;
+    width: 1000px;
+    border: 1px solid red;
+
+    text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #eae8ee 0%,
+    #c72060 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:xx-large;
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }

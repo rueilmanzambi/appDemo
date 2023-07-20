@@ -182,10 +182,11 @@ html, body {
     border-radius: 8px;
   }
 
+  /***************************Rule Screen *****************/
 .ruleScreen {
   padding-top: 20px;
   position: absolute;
-  /*opacity: 0; To make rule screen dis-appear  */
+  opacity: 0; /*To make rule screen dis-appear  */
 }
 
 .typeRules {
@@ -260,4 +261,218 @@ html, body {
   color: white;
   border-radius: 8px;
   margin-top: 15px;
+}
+
+/****************************** ADDED RULES ***************/
+.additionalRuleScreen {
+  padding-top: 0px;
+  position: absolute;
+  opacity: 0; /*To make rule screen dis-appear  */
+}
+
+.addTypeRules {
+  width: 95%;
+  color:#0000;
+  background:
+    linear-gradient(-90deg,white 5px,#0000 0) 10px 0,
+    linear-gradient(white 0 0) 0 0;
+  background-size:calc(var(--n)*1ch) 200%;
+  -webkit-background-clip:padding-box,text;
+  background-clip:padding-box,text;
+  background-repeat:no-repeat;
+  animation: 
+   b .2s infinite steps(1),   
+   t calc(var(--n)*0.02s) steps(var(--n)) forwards;
+}
+.addRuleMsg {
+  display: flex;
+  justify-content: center;
+}
+.addTerminalRules {
+  padding-left: 5px;
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 6px;
+  padding-top: 35px;
+  margin-top: 0px;
+  overflow: hidden;
+  background-color: rgb(15, 15, 16);
+  height: 580px;
+  font-size: 13px;
+}
+
+
+@keyframes t{
+  from {background-size:0 200%}
+}
+@keyframes b{
+  50% {background-position:0 -100%,0 0}
+}
+
+.addTerminalRules::before {
+  content: "\2022 \2022 \2022";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: rgb(58, 58, 58);
+  color: #c2c3c4;
+  width: 100%;
+  font-size: 2rem;
+  line-height: 0;
+  padding: 14px 0;
+  text-indent: 4px;
+}
+
+.addTerminalRules pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  color: white;
+  padding: 0 1rem 1rem;
+  margin: 0;
+}
+
+.clickToContinue {
+  display: flex;
+  justify-content: center;
+}
+
+.clickToContinueBtn {
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+
+/********* level one **************/
+
+.levelOneScreen {
+  border : 1px solid red;
+  width: 100%;
+  display: flex;
+}
+
+.leftPanel {
+  border: 1px solid green;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.leftTop, .leftBottom{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+}
+.mainPanel {
+  border: 1px solid yellow;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+.mainSec, .mainThird, .mainFourth {
+  flex: 1;
+  display: flex;
+}
+.aiPlay {
+  border: 1px solid red;
+  height: 100px;
+  width: 450px;
+  padding-top: 30px;
+  margin-right: 60%;
+  margin-top: 5%;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.yourPlay {
+  border: 1px solid red;
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  margin-left: 45%;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.playResult {
+  border: 1px solid red;
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  padding-left: 3px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+.mainTop, .mainBottom {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainTop {
+  flex-direction: column;
+}
+.mainBottom {
+  border: 1px solid black;
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.playerOption {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+}
+
+.rock {
+  border: 1px solid green;
+}
+.paper {
+  border: 1px solid red;
+}
+.scissors {
+  border: 1px solid purple;
+}
+
+
+.rightPanel {
+  border: 1px solid black;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.rightTop, .rightBottom {
+  flex: 1;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
+.rightBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightPanel ul {
+  border: 1px solid black;
 }

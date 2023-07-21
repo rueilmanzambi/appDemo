@@ -155,6 +155,19 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy  {
       this.solution = 'Lizard or Paper';
     }
   }
+  setSolutionOne(): void {
+    if (this.aiPlayChoiceNbr==0){
+      this.solution = 'Paper';
+    } else if (this.aiPlayChoiceNbr==1){
+      this.solution = 'Scissors';
+    } else if (this.aiPlayChoiceNbr == 2){
+      this.solution = 'Rock';
+    } else if (this.aiPlayChoiceNbr==3){
+      this.solution = 'Scissors or Rock';
+    } else if (this.aiPlayChoiceNbr==4){
+      this.solution = 'Paper';
+    }
+  }
 
   updateScore(){
     //this.levelTwoRule = 'show';
@@ -297,6 +310,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
   audio: any;
   volume: number = 0.1;
+  // 0.04
   playAudio(){
     this.audio = new Audio();
     this.audio.src = "assets/audio/music.mp3";

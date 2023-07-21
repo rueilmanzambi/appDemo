@@ -1,0 +1,706 @@
+html, body {
+  line-height: inherit;
+  margin: 0px;
+  padding: 0;
+  background-image: url('src/assets/images/gameBg.gif');
+  width: 100vw;
+  overflow-x: hidden;
+  background-size:  cover; /* Add this line to adjust the background size */
+
+    left: 0;
+    right: 0;
+    
+    display: flex;
+    height: 1000px;
+    position: absolute;
+    justify-content: center;
+}
+
+.yypage-background {
+    margin-top : 60px;
+    border : 1px solid red;
+    background-image: url('src/assets/images/gameBg.gif');
+    width: 100vw;
+    margin-left: 0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Adjust other background properties as needed */
+  }
+
+  .page-background {
+    margin-top : 60px;
+    width: 1300px;
+    height: 800px;
+    /* Adjust other background properties as needed */
+  }
+
+  .content {
+    margin: 20px;
+    height: 700px;
+    padding: 00px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    color: rgb(241, 238, 243);
+    font-size: large;
+    font-weight: bolder;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+  }
+  .titleContainer {
+    justify-content: center;
+    display: flex;
+    height: 45px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    box-shadow: inset 0px -5px 5px -5px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(#191cd2, #0c0263);
+  }
+  .titleDiv {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 500px;
+    
+    border-radius: 10px;
+    
+  }
+  .content-main {
+    margin: 5px;
+    padding: 5px;
+    height: 630px;
+    justify-content: center;
+    display: flex;
+  }
+  .welcomeScreen {
+    padding-top: 20px;
+    position: absolute;
+    z-index: 5;
+    /*opacity: 0; To make welcome screen dis-appear  */
+  }
+  .welcomeMsg {
+    display: flex;
+    justify-content: center;
+  }
+  .welcomeTitle {
+    text-align: center;
+    font-size: 40px;
+
+    text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #eae8ee 0%,
+    #c72060 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:xx-large;
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }
+  .type {
+    width: 95%;
+    color:#0000;
+    background:
+      linear-gradient(-90deg,white 5px,#0000 0) 10px 0,
+      linear-gradient(white 0 0) 0 0;
+    background-size:calc(var(--n)*1ch) 200%;
+    -webkit-background-clip:padding-box,text;
+    background-clip:padding-box,text;
+    background-repeat:no-repeat;
+    animation: 
+     b .2s infinite steps(1),   
+     t calc(var(--n)*0.05s) steps(var(--n)) forwards;
+  }
+  .terminal {
+    padding-left: 5px;
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 6px;
+    padding-top: 45px;
+    margin-top: 50px;
+    overflow: hidden;
+    background-color: rgb(15, 15, 16);
+    height: 290px;
+  }
+
+  
+  @keyframes t{
+    from {background-size:0 200%}
+  }
+  @keyframes b{
+    50% {background-position:0 -100%,0 0}
+  }
+
+  .terminal::before {
+    content: "\2022 \2022 \2022";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: rgb(58, 58, 58);
+    color: #c2c3c4;
+    width: 100%;
+    font-size: 2rem;
+    line-height: 0;
+    padding: 14px 0;
+    text-indent: 4px;
+  }
+
+  .terminal pre {
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    color: white;
+    padding: 0 1rem 1rem;
+    margin: 0;
+  }
+  .goToRules {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+
+    
+  }
+  .goToRulesBtn {
+    background: linear-gradient(#191cd2, #0c0263);
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    z-index: 1;
+  }
+  /*
+  .goToRulesBtn:focus {
+  transform: scale(1.2); 
+  transition: transform 0.2s ease-in-out;
+}
+*/
+  /***************************Rule Screen *****************/
+.ruleScreen {
+  padding-top: 20px;
+  position: absolute;
+  opacity: 0; /*To make rule screen dis-appear  */
+  z-index: 4;
+}
+
+.typeRules {
+  width: 95%;
+  color:#0000;
+  background:
+    linear-gradient(-90deg,white 5px,#0000 0) 10px 0,
+    linear-gradient(white 0 0) 0 0;
+  background-size:calc(var(--n)*1ch) 200%;
+  -webkit-background-clip:padding-box,text;
+  background-clip:padding-box,text;
+  background-repeat:no-repeat;
+  animation: 
+   b .2s infinite steps(1),   
+   t calc(var(--n)*0.02s) steps(var(--n)) forwards;
+}
+.ruleMsg {
+  display: flex;
+  justify-content: center;
+}
+.terminalRules {
+  padding-left: 5px;
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 6px;
+  padding-top: 45px;
+  margin-top: 10px;
+  overflow: hidden;
+  background-color: rgb(15, 15, 16);
+  height: 475px;
+}
+
+
+@keyframes t{
+  from {background-size:0 200%}
+}
+@keyframes b{
+  50% {background-position:0 -100%,0 0}
+}
+
+.terminalRules::before {
+  content: "\2022 \2022 \2022";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: rgb(58, 58, 58);
+  color: #c2c3c4;
+  width: 100%;
+  font-size: 2rem;
+  line-height: 0;
+  padding: 14px 0;
+  text-indent: 4px;
+}
+
+.terminalRules pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  color: white;
+  padding: 0 1rem 1rem;
+  margin: 0;
+}
+
+.clickToStart {
+  display: flex;
+  justify-content: center;
+}
+
+.clickToStartBtn {
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  margin-top: 15px;
+  z-index: 5;
+}
+
+/****************************** ADDED RULES ***************/
+.additionalRuleScreen {
+  padding-top: 0px;
+  position: absolute;
+  opacity: 0;/* To make rule screen dis-appear  */
+  z-index: 2;
+}
+
+.addTypeRules {
+  width: 95%;
+  color:#0000;
+  background:
+    linear-gradient(-90deg,white 5px,#0000 0) 10px 0,
+    linear-gradient(white 0 0) 0 0;
+  background-size:calc(var(--n)*1ch) 200%;
+  -webkit-background-clip:padding-box,text;
+  background-clip:padding-box,text;
+  background-repeat:no-repeat;
+  animation: 
+   b .2s infinite steps(1),   
+   t calc(var(--n)*0.02s) steps(var(--n)) forwards;
+}
+.addRuleMsg {
+  display: flex;
+  justify-content: center;
+}
+.addTerminalRules {
+  padding-left: 5px;
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 6px;
+  padding-top: 35px;
+  margin-top: 0px;
+  overflow: hidden;
+  background-color: rgb(15, 15, 16);
+  height: 580px;
+  font-size: 13px;
+}
+
+
+@keyframes t{
+  from {background-size:0 200%}
+}
+@keyframes b{
+  50% {background-position:0 -100%,0 0}
+}
+
+.addTerminalRules::before {
+  content: "\2022 \2022 \2022";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: rgb(58, 58, 58);
+  color: #c2c3c4;
+  width: 100%;
+  font-size: 2rem;
+  line-height: 0;
+  padding: 14px 0;
+  text-indent: 4px;
+}
+
+.addTerminalRules pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  color: white;
+  padding: 0 1rem 1rem;
+  margin: 0;
+}
+
+.clickToContinue {
+  display: flex;
+  justify-content: center;
+}
+
+.clickToContinueBtn {
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+
+/********* level one **************/
+
+.levelOneScreen {
+  height: 620px;
+  width: 1240px;
+  display: flex;
+  padding-top: 20px;
+  position: absolute;
+  opacity: 0; /*To make rule screen dis-appear  */
+  z-index: 3;
+}
+
+.leftPanel {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+.leftTop, .leftBottom{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+}
+.mainPanel {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+.mainSec, .mainThird, .mainFourth {
+  flex: 1;
+  display: flex;
+}
+.aiPlay {
+  height: 100px;
+  width: 450px;
+  padding-top: 30px;
+  margin-right: 60%;
+  margin-top: 5%;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.yourPlay {
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  margin-left: 45%;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.playResult {
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+.mainTop, .mainBottom {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainTop {
+  flex-direction: column;
+}
+.mainBottom {
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.playerOption {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+}
+
+.rock {
+  z-index: 1;
+  border-radius: 5px;
+}
+.paper {
+  z-index: 1;
+  border-radius: 5px;
+}
+.scissors {
+  z-index: 1;
+  border-radius: 5px;
+}
+.lizard {
+  z-index: 1;
+  border-radius: 5px;
+}
+.spock {
+  z-index: 1;
+  border-radius: 5px;
+}
+
+
+.rightPanel {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.rightTop, .rightBottom {
+  flex: 1;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
+.rightBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightPanel ul {
+}
+
+/**********************level two screen *************/
+
+.levelTwoScreen {
+  height: 620px;
+  width: 1240px;
+  display: flex;
+  padding-top: 20px;
+  position: absolute;
+  opacity: 0;/**/
+  z-index: 1;
+}
+.leftPanelF {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.leftTopF, .leftBottomF{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+}
+.mainPanelF {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+.mainSecF, .mainThirdF, .mainFourthF {
+  flex: 1;
+  display: flex;
+}
+.aiPlayF {
+  height: 100px;
+  width: 450px;
+  padding-top: 30px;
+  margin-right: 60%;
+  margin-top: 5%;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.yourPlayF {
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  margin-left: 45%;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.playResultF {
+  height: 100px;
+  width: 400px;
+  padding-top: 30px;
+  padding-left: 3px;
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+.mainTopF, .mainBottomF {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainTopF {
+  flex-direction: column;
+}
+.mainBottomF {
+  border: 1px solid black;
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.playerOptionF {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(#191cd2, #0c0263);
+  font-weight: bold;
+  color: white;
+  z-index: 1;
+}
+
+.rockF {
+  border-radius: 5px;
+}
+.paperF {
+  border-radius: 5px;
+}
+.scissorsF {
+  border-radius: 5px;
+}
+
+
+.rightPanelF {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.rightTopF, .rightBottomF {
+  flex: 1;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
+.rightBottomF {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightPanelF ul {
+}
+
+
+/************** final screen ************/
+
+
+  .endScreen {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;/* To make welcome screen dis-appear  */
+    z-index: 0;
+  }
+  .endMsg {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #eae8ee 0%,
+    #c72060 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:xx-large;
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  
+  .endTitle {
+    text-align: center;
+    font-size: 40px;
+    width: 1000px;
+
+    text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #eae8ee 0%,
+    #c72060 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:xx-large;
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }

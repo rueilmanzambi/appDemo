@@ -301,6 +301,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy  {
     this.audio = new Audio();
     this.audio.src = "assets/audio/music.mp3";
     this.audio.volume = this.volume;
+    this.audio.loop = true;
     this.audio.load;
     this.audio.play();
   }

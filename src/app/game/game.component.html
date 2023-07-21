@@ -7,7 +7,7 @@
                 <div class="titleDiv">Pi's Ultimate Game</div>
             </div>
             <div class="content-main">
-                <div class="welcomeScreen">
+                <div class="welcomeScreen" [@welcomeScreenDis]="welcomeScreenVisible">
                     <div class="welcomeTitle">
                         Welcome to Rock, Paper And Scissors
                     </div>
@@ -24,10 +24,11 @@
                         </div>
                     </div>
                     <div class="goToRules">
-                        <button class="goToRulesBtn">Click Here To Read The Rules</button>
+                        <button class="goToRulesBtn" [@focusPanel]="stateFocus" on-focus="toggleFocus()" 
+                            on-focusout="toggleFocus()" [@welcomeScreenDis]="welcomeScreenVisible" (click)="toggleDisappearWelcome()">Click Here To Read The Rules</button>
                     </div>
                 </div>
-                <div class="ruleScreen">
+                <div class="ruleScreen" [@welcomeScreenDis]="ruleScreenVisible"  [@ruleScreenAppDis]="ruleScreenVisibleF" >
                     <div class="welcomeTitle">
                         Welcome to Rock, Paper And Scissors
                     </div>
@@ -50,10 +51,10 @@
                         </div>
                     </div>
                     <div class="clickToStart">
-                        <button class="clickToStartBtn">Start The Game</button>
+                        <button class="clickToStartBtn"  (click)="toggleDisappearRule()">Start The Game</button>
                     </div>
                 </div>
-                <div class="additionalRuleScreen">
+                <div class="additionalRuleScreen" [@ruleScreenAdd]="levelTwoRule" [@levelTwoScreen]="levelTwoVisible">
                     
                     <div class="addRuleMsg">
                         <div class="addTerminalRules">
@@ -84,45 +85,45 @@
                         </div>
                     </div>
                     <div class="clickToContinue">
-                        <button class="clickToContinueBtn">Start The Game</button>
+                        <button class="clickToContinueBtn" (click)="toggleDisappearRuleTwo()">Start The Game</button>
                     </div>
                 </div>
-                <div class="levelOneScreen">
+                <div class="levelOneScreen" [@ruleScreenAppDis]="levelOneVisible" [@levelOneScreenAppDis]="levelOneVisibleF">
                     <div class="leftPanel">
-                        <div class="leftTop">
-                            Hint
-                        </div>
-                        <div class="leftBottom">
-                            Solution
-                        </div>
+                        <button class="leftTop" (click)="setHint()">
+                            Hint: {{hint}}
+                        </button>
+                        <button class="leftBottom" (click)="setSolution()">
+                            Solution: {{solution}}
+                        </button>
                     </div>
                     <div class="mainPanel">
                         <div class="mainTop">
                             <div class="mainSec">
                                 <div class="aiPlay">
-                                    Ai played: 
+                                    Ai played: {{aiOption}}
                                 </div>
                             </div>
                             <div class="mainThird">
                                 <div class="yourPlay">
-                                    You played:
+                                    You played: {{userOption}}
                                 </div>
                             </div>
                             <div class="mainFourth">
                                 <div class="playResult">
-                                    Result:
+                                    Result: {{tempResultText}}
                                 </div>
                             </div>
                         </div>
                         
                         <div class="mainBottom">
-                            <button class="playerOption rock">
+                            <button class="playerOption rock" (click)="checkAnswer('rock')">
                                 Rock
                             </button>
-                            <button class="playerOption paper">
+                            <button class="playerOption paper" (click)="checkAnswer('paper')">
                                 Paper
                             </button>
-                            <button class="playerOption scissors">
+                            <button class="playerOption scissors" (click)="checkAnswer('scissors')">
                                 Scissors
                             </button>
                         </div>
@@ -132,54 +133,60 @@
                             <div>Score board (The first to 3 wins)</div>
                             <div>
                                 <ul>
-                                    <li>You have: </li>
-                                    <li>AI has: </li>
+                                    <li>You have: {{userScore}}</li>
+                                    <li>AI has: {{aiScore}}</li>
                                 </ul>
                             </div>
                             
                         </div>
                         <div class="rightBottom">
-                            Fun facts
+                            Fun fact: {{funFact}}
                         </div>
                     </div>
                 </div>
-                <div class="levelTwoScreen">
+                <div class="levelTwoScreen" [@levelTwoScreen]="levelTwoVisibleF">
                     <div class="leftPanel">
-                        <div class="leftTop">
-                            Hint
-                        </div>
-                        <div class="leftBottom">
-                            Solution
-                        </div>
+                        <button class="leftTop" (click)="setHint()">
+                            Hint: {{hint}}
+                        </button>
+                        <button class="leftBottom" (click)="setSolution()">
+                            Solution: {{solution}}
+                        </button>
                     </div>
                     <div class="mainPanel">
                         <div class="mainTop">
                             <div class="mainSec">
                                 <div class="aiPlay">
-                                    Ai played: 
+                                    Ai played: {{aiOption}}
                                 </div>
                             </div>
                             <div class="mainThird">
                                 <div class="yourPlay">
-                                    You played:
+                                    You played: {{userOption}}
                                 </div>
                             </div>
                             <div class="mainFourth">
                                 <div class="playResult">
-                                    Result:
+                                    Result: {{tempResultText}}
                                 </div>
                             </div>
                         </div>
-                        
+                         
                         <div class="mainBottom">
-                            <button class="playerOption rock">
+                            <button class="playerOption rock" (click)="checkAnswerTwo('rock')">
                                 Rock
                             </button>
-                            <button class="playerOption paper">
+                            <button class="playerOption paper" (click)="checkAnswerTwo('paper')">
                                 Paper
                             </button>
-                            <button class="playerOption scissors">
+                            <button class="playerOption scissors" (click)="checkAnswerTwo('scissors')">
                                 Scissors
+                            </button>
+                            <button class="playerOption lizard" (click)="checkAnswerTwo('lizard')">
+                                Lizard
+                            </button>
+                            <button class="playerOption spock" (click)="checkAnswerTwo('spock')">
+                                Spock
                             </button>
                         </div>
                     </div>
@@ -188,80 +195,23 @@
                             <div>Score board (The first to 3 wins)</div>
                             <div>
                                 <ul>
-                                    <li>You have: </li>
-                                    <li>AI has: </li>
+                                    <li>You have: {{userScore}} </li>
+                                    <li>AI has: {{aiScore}} </li>
                                 </ul>
                             </div>
                             
                         </div>
                         <div class="rightBottom">
-                            Fun facts
+                            Fun fact: {{funFact}}
                         </div>
                     </div>
                 </div>
-                <div class="finalScreen">
-                    <div class="leftPanelF">
-                        <div class="leftTopF">
-                            Hint
-                        </div>
-                        <div class="leftBottomF">
-                            Solution
-                        </div>
-                    </div>
-                    <div class="mainPanelF">
-                        <div class="mainTopF">
-                            <div class="mainSecF">
-                                <div class="aiPlayF">
-                                    Ai played: 
-                                </div>
-                            </div>
-                            <div class="mainThirdF">
-                                <div class="yourPlayF">
-                                    You played:
-                                </div>
-                            </div>
-                            <div class="mainFourthF">
-                                <div class="playResultF">
-                                    Result:
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mainBottomF">
-                            <button class="playerOptionF rockF">
-                                Rock
-                            </button>
-                            <button class="playerOptionF paperF">
-                                Paper
-                            </button>
-                            <button class="playerOptionF scissorsF">
-                                Scissors
-                            </button>
-                            
-                        </div>
-                    </div>
-                    <div class="rightPanelF">
-                        <div class="rightTopF">
-                            <div>Score board (The first to 3 wins)</div>
-                            <div>
-                                <ul>
-                                    <li>You have: </li>
-                                    <li>AI has: </li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                        <div class="rightBottomF">
-                            Fun facts
-                        </div>
-                    </div>
-                </div>
-                <div class="endScreen">
+                <div class="endScreen" [@endOfGame]="isGameFinished">
                     <div class="endTitle">
                         Thanks for playing!
                     </div>
                     <div class="endMsg">
-                       You lost
+                       {{finalResultText}}
                     </div>
                 </div>
             </div>

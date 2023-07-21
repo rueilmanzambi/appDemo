@@ -30,7 +30,6 @@ html, body {
 
   .page-background {
     margin-top : 60px;
-    border : 1px solid red;
     width: 1300px;
     height: 800px;
     /* Adjust other background properties as needed */
@@ -69,7 +68,6 @@ html, body {
     
   }
   .content-main {
-    border: 1px solid green;
     margin: 5px;
     padding: 5px;
     height: 630px;
@@ -79,7 +77,8 @@ html, body {
   .welcomeScreen {
     padding-top: 20px;
     position: absolute;
-    opacity: 0;/* To make welcome screen dis-appear  */
+    z-index: 5;
+    /*opacity: 0; To make welcome screen dis-appear  */
   }
   .welcomeMsg {
     display: flex;
@@ -174,19 +173,28 @@ html, body {
     display: flex;
     justify-content: center;
     margin-top: 70px;
+
+    
   }
   .goToRulesBtn {
     background: linear-gradient(#191cd2, #0c0263);
     font-weight: bold;
     color: white;
     border-radius: 8px;
+    z-index: 1;
   }
-
+  /*
+  .goToRulesBtn:focus {
+  transform: scale(1.2); 
+  transition: transform 0.2s ease-in-out;
+}
+*/
   /***************************Rule Screen *****************/
 .ruleScreen {
   padding-top: 20px;
   position: absolute;
   opacity: 0; /*To make rule screen dis-appear  */
+  z-index: 4;
 }
 
 .typeRules {
@@ -261,6 +269,7 @@ html, body {
   color: white;
   border-radius: 8px;
   margin-top: 15px;
+  z-index: 5;
 }
 
 /****************************** ADDED RULES ***************/
@@ -268,6 +277,7 @@ html, body {
   padding-top: 0px;
   position: absolute;
   opacity: 0;/* To make rule screen dis-appear  */
+  z-index: 2;
 }
 
 .addTypeRules {
@@ -349,20 +359,20 @@ html, body {
 /********* level one **************/
 
 .levelOneScreen {
-  border : 1px solid red;
   height: 620px;
   width: 1240px;
   display: flex;
   padding-top: 20px;
   position: absolute;
   opacity: 0; /*To make rule screen dis-appear  */
+  z-index: 3;
 }
 
 .leftPanel {
-  border: 1px solid green;
   width: 20%;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 }
 .leftTop, .leftBottom{
   flex: 1;
@@ -378,7 +388,6 @@ html, body {
   color: white;
 }
 .mainPanel {
-  border: 1px solid yellow;
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -388,32 +397,32 @@ html, body {
   display: flex;
 }
 .aiPlay {
-  border: 1px solid red;
   height: 100px;
   width: 450px;
   padding-top: 30px;
   margin-right: 60%;
   margin-top: 5%;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 }
 .yourPlay {
-  border: 1px solid red;
   height: 100px;
   width: 400px;
   padding-top: 30px;
   margin-left: 45%;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 }
 .playResult {
-  border: 1px solid red;
   height: 100px;
   width: 400px;
   padding-top: 30px;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 
@@ -428,7 +437,6 @@ html, body {
   flex-direction: column;
 }
 .mainBottom {
-  border: 1px solid black;
   flex: 0 0 10%;
   display: flex;
   align-items: center;
@@ -447,18 +455,28 @@ html, body {
 }
 
 .rock {
-  border: 1px solid green;
+  z-index: 1;
+  border-radius: 5px;
 }
 .paper {
-  border: 1px solid red;
+  z-index: 1;
+  border-radius: 5px;
 }
 .scissors {
-  border: 1px solid purple;
+  z-index: 1;
+  border-radius: 5px;
+}
+.lizard {
+  z-index: 1;
+  border-radius: 5px;
+}
+.spock {
+  z-index: 1;
+  border-radius: 5px;
 }
 
 
 .rightPanel {
-  border: 1px solid black;
   width: 20%;
   display: flex;
   flex-direction: column;
@@ -478,22 +496,20 @@ html, body {
   align-items: center;
 }
 .rightPanel ul {
-  border: 1px solid black;
 }
 
 /**********************level two screen *************/
 
 .levelTwoScreen {
-  border : 1px solid red;
   height: 620px;
   width: 1240px;
   display: flex;
   padding-top: 20px;
   position: absolute;
   opacity: 0;/**/
+  z-index: 1;
 }
 .leftPanelF {
-  border: 1px solid green;
   width: 20%;
   display: flex;
   flex-direction: column;
@@ -512,7 +528,6 @@ html, body {
   color: white;
 }
 .mainPanelF {
-  border: 1px solid yellow;
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -522,32 +537,32 @@ html, body {
   display: flex;
 }
 .aiPlayF {
-  border: 1px solid red;
   height: 100px;
   width: 450px;
   padding-top: 30px;
   margin-right: 60%;
   margin-top: 5%;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 }
 .yourPlayF {
-  border: 1px solid red;
   height: 100px;
   width: 400px;
   padding-top: 30px;
   margin-left: 45%;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 }
 .playResultF {
-  border: 1px solid red;
   height: 100px;
   width: 400px;
   padding-top: 30px;
   padding-left: 3px;
+  border-radius: 5px;
 
   background-color: rgba(0, 0, 0, 0.2);
 
@@ -578,21 +593,21 @@ html, body {
   background: linear-gradient(#191cd2, #0c0263);
   font-weight: bold;
   color: white;
+  z-index: 1;
 }
 
 .rockF {
-  border: 1px solid green;
+  border-radius: 5px;
 }
 .paperF {
-  border: 1px solid red;
+  border-radius: 5px;
 }
 .scissorsF {
-  border: 1px solid purple;
+  border-radius: 5px;
 }
 
 
 .rightPanelF {
-  border: 1px solid black;
   width: 20%;
   display: flex;
   flex-direction: column;
@@ -612,28 +627,20 @@ html, body {
   align-items: center;
 }
 .rightPanelF ul {
-  border: 1px solid black;
 }
 
 
 /************** final screen ************/
-.finalScreen {
-  border : 1px solid red;
-  width: 100%;
-  display: flex;
- opacity: 0; /**/
-}
+
 
   .endScreen {
     padding-top: 20px;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
-    
-    margin-right: 50%;
-    /*opacity: 0; To make welcome screen dis-appear  */
+    opacity: 0;/* To make welcome screen dis-appear  */
+    z-index: 0;
   }
   .endMsg {
     display: flex;
@@ -671,7 +678,6 @@ html, body {
     text-align: center;
     font-size: 40px;
     width: 1000px;
-    border: 1px solid red;
 
     text-transform: uppercase;
   background-image: linear-gradient(

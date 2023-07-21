@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy  } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 @Component({
@@ -90,7 +90,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
     ])
   ]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, AfterViewInit, OnDestroy  {
   stateFocus: string = 'inactive';
   welcomeScreenVisible: string = 'true';
   ruleScreenVisible: string = 'false';
@@ -293,7 +293,27 @@ export class GameComponent implements OnInit {
     
   }
 
+  ngAfterViewInit(): void {
+  }
+  audio: any;
+  volume: number = 0.1;
+  playAudio(){
+    this.audio = new Audio();
+    this.audio.src = "assets/audio/music.mp3";
+    this.audio.volume = this.volume;
+    this.audio.load;
+    this.audio.play();
+  }
+  ngOnDestroy(): void {
+    if(this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
+    }
+  } 
   ngOnInit(): void {
+    this.playAudio();
+
     this.initializeAll();
     this.aiPlayChoiceNbr = Math.floor(Math.random() * 3);
     console.log("AI play: " + this.aiPlayChoiceNbr + " " + this.aiPlay[this.aiPlayChoiceNbr]);

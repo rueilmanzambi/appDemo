@@ -1,119 +1,146 @@
-here is the mapping
-{
-  "criteria_typeahead": {
-    "mappings": {
-      "properties": {
-        "completion_suggester": {
-          "type": "completion",
-          "analyzer": "standard",
-          "preserve_separators": true,
-          "preserve_position_increments": true,
-          "max_input_length": 50,
-          "contexts": [
-            {
-              "name": "criteriaType",
-              "type": "CATEGORY"
-            }
-          ]
-        },
-        "conditionCategory": {
-          "type": "text"
-        },
-        "confirmedCriteriaSpecialties": {
-          "type": "long"
-        },
-        "criteriaId": {
-          "type": "integer"
-        },
-        "criteriaType": {
-          "type": "text"
-        },
-        "criteriaTypeId": {
-          "type": "byte"
-        },
-        "description": {
-          "type": "keyword"
-        },
-        "isServiceRequest": {
-          "type": "boolean"
-        },
-        "procedureCode": {
-          "type": "keyword",
-          "index": false
-        },
-        "procedureId": {
-          "type": "integer",
-          "index": false
-        },
-        "relatedCriteriaSpecialties": {
-          "type": "long"
-        },
-        "synonyms": {
-          "type": "text"
-        }
-      }
-    }
-  }
-}
+public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetServiceRequestAsync(string searchText, string criteriaCondition, string conditionCategory)
+    {
+        try
+        {
+            var esResponse = await this._esClient._client
+                .SearchAsync<Entities.Elastic.Criterias.Criteria>(s => s
+                    .Index("criteria_typeahead")
+                    .Query(q => q
+                        .Bool(b =>
+                        {
+                            // Start with an empty Must list
+                            var mustClauses = new List<QueryContainer>();
 
+                            // Always filter for isServiceRequest = true
+                            mustClauses.Add(new TermQuery
+                            {
+                                Field = "isServiceRequest",
+                                Value = true
+                            });
 
-and this is how it was created 
-PUT criteria_typeahead
-{
-  "settings": {
-    "number_of_replicas": 2,
-    "number_of_shards": 1
-  },
-  "mappings" : {
-      "properties" : {
-        "completion_suggester" : {
-          "type" : "completion",
-          "analyzer" : "standard",
-          "preserve_separators" : true,
-          "preserve_position_increments" : true,
-          "max_input_length" : 50,
-          "contexts" : [
+                            mustClauses.Add(new MatchQuery
+                            {
+                                Field = "criteriaType",
+                                Query = criteriaCondition,
+                            });
+
+                            // Nested conditionals for conditionCategory
+                            if (!string.IsNullOrEmpty(conditionCategory))
+                            {
+                                mustClauses.Add(new MatchQuery
+                                {
+                                    Field = "conditionCategory",
+                                    Query = conditionCategory,
+                                });
+                            }
+
+                            // Nested conditionals for searchText
+                            if (!string.IsNullOrEmpty(searchText))
+                            {
+                                mustClauses.Add(new BoolQuery
+                                {
+                                    Should = new List<QueryContainer>
+                                    {
+                                    new MatchQuery { Field = "description", Query = searchText },
+                                    new MatchQuery { Field = "synonyms", Query = searchText }
+                                    }
+                                });
+                            }
+
+                            // Pass the mustClauses as an array to Must()
+                            b.Must(mustClauses.ToArray());
+                            return b;
+                        }))
+                    // Suggestions only if searchText is not empty
+                    .Suggest(d => !string.IsNullOrEmpty(searchText) ? d
+                        .Completion("suggestion", c => c
+                            .Size(10)
+                            .Prefix(searchText)
+                            .Field("completion_suggester")
+                            .Contexts(ctxs => ctxs
+                                .Context("criteriaType", ctx => ctx
+                                    .Context(criteriaCondition)))
+                        ) : null));
+
+            var response = new HttpProxyResponse<IEnumerable<Models.Criteria>>()
             {
-              "name" : "criteriaType",
-              "type" : "CATEGORY"
+                StatusCode = (System.Net.HttpStatusCode)esResponse.ApiCall.HttpStatusCode,
+                IsSuccessStatusCode = (esResponse.ApiCall.HttpStatusCode <= 299)
+            };
+
+            if (!response.IsSuccessStatusCode)
+            {
+                response.Message = JsonSerializer.Serialize(esResponse.OriginalException);
+                response.Content = null;
+                return response;
             }
-          ]
-        },
-        "confirmedCriteriaSpecialties" : {
-          "type" : "long"
-        },
-        "criteriaId" : {
-          "type" : "integer"
-        },
-        "criteriaType" : {
-          "type" : "text"
-        },
-        "criteriaTypeId" : {
-          "type" : "byte"
-        },
-        "description" : {
-          "type" : "keyword"
-        },
-        "conditionCategory": {
-          "type": "text"
-        },
-        "isServiceRequest": {
-          "type": "boolean"
-        },
-        "procedureCode" : {
-          "type" : "keyword",
-          "index" : false
-        },
-        "procedureId" : {
-          "type" : "integer",
-          "index" : false
-        },
-        "relatedCriteriaSpecialties" : {
-          "type" : "long"
-        },
-        "synonyms" : {
-          "type" : "text"
+
+            response.Message = "Success";
+            if (!esResponse.IsValid)
+            {
+                this._logger.LogError($"Error in Elasticsearch for criteria typeahead: {response.Message}");
+                response.Content = null;
+                return response;
+            }
+
+            if ((!string.IsNullOrEmpty(searchText) && esResponse.Suggest["suggestion"] == null) ||
+                (!string.IsNullOrEmpty(searchText) && !esResponse.Suggest["suggestion"].Any()))
+            {
+                response.Content = null;
+            }
+            else
+            {
+                var suggestion = (!string.IsNullOrEmpty(searchText) && esResponse.Suggest.ContainsKey("suggestion"))
+                    ? esResponse.Suggest["suggestion"]
+                        .FirstOrDefault()
+                        ?.Options
+                        .Select(n => new Models.Criteria()
+                        {
+                            Id = n.Source.CriteriaId,
+                            Code = n.Source.ProcedureCode,
+                            Description = n.Source.Description,
+                            IsServiceRequest = n.Source.IsServiceRequest,
+                            ConditionCategory = n.Source?.ConditionCategory,
+                            Score = n.Score,
+                            CriteriaTypeId = n.Source.CriteriaTypeId,
+                            Took = esResponse.Took,
+                            RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties
+                        })
+                        .OrderByDescending(o => o.Score)
+                        .ThenBy(t => t.Description)
+                        .ToList()
+                    : new List<Models.Criteria>();
+
+                var hits = esResponse.Hits.Select(s => new Models.Criteria()
+                {
+                    Id = s.Source.CriteriaId,
+                    Code = s.Source.ProcedureCode,
+                    Description = s.Source.Description,
+                    IsServiceRequest = s.Source.IsServiceRequest,
+                    ConditionCategory = s.Source?.ConditionCategory,
+                    Score = 1,
+                    CriteriaTypeId = s.Source.CriteriaTypeId,
+                    Took = esResponse.Took,
+                    RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties
+                }).ToList();
+
+                var combined = hits.Concat(suggestion).ToList();
+                var newCombined = new List<Models.Criteria>();
+                foreach (var x in combined)
+                {
+                    if (newCombined.FirstOrDefault(f => f.Id == x.Id) == null)
+                    {
+                        newCombined.Add(x);
+                    }
+                }
+
+                response.Content = newCombined;
+            }
+
+            return response;
         }
-      }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
-}

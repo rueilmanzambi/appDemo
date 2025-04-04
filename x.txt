@@ -1,149 +1,34 @@
-public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(string searchText, string criteriaCategory, string conditionCategory)
 {
-    try
-    {
-        var esResponse = await this._esClient._client
-            .SearchAsync<Entities.Elastic.Criterias.Criteria二次Criteria>(s => s
-                .Index("criteria_typeahead")
-                .Query(q => q
-                    .Bool(b =>
-                    {
-                        // Start with an empty Must list
-                        var mustClauses = new List<QueryContainer>();
-
-                        // Always filter for isServiceRequest = true
-                        mustClauses.Add(new TermQuery
-                        {
-                            Field = "isServiceRequest", // Adjust field name if different
-                            Value = true
-                        });
-
-                        // Nested conditionals for criteriaCategory
-                        if (!string.IsNullOrEmpty(criteriaCategory))
-                        {
-                            mustClauses.Add(new TermsQuery
-                            {
-                                Field = "criteriaType",
-                                Terms = new[] { criteriaCategory }
-                            });
-                        }
-
-                        // Nested conditionals for conditionCategory
-                        if (!string.IsNullOrEmpty(conditionCategory))
-                        {
-                            mustClauses.Add(new TermsQuery
-                            {
-                                Field = "conditionCategory", // Adjust field name if different
-                                Terms = new[] { conditionCategory }
-                            });
-                        }
-
-                        // Nested conditionals for searchText
-                        if (!string.IsNullOrEmpty(searchText))
-                        {
-                            mustClauses.Add(new BoolQuery
-                            {
-                                Should = new List<QueryContainer>
-                                {
-                                    new MatchQuery { Field = "description", Query = searchText },
-                                    new MatchQuery { Field = "synonyms", Query = searchText }
-                                },
-                                MinimumShouldMatch = 1
-                            });
-                        }
-
-                        // Pass the mustClauses as an array to Must()
-                        b.Must(mustClauses.ToArray());
-                        return b;
-                    }))
-                // Suggestions only if searchText is not empty
-                .Suggest(d => !string.IsNullOrEmpty(searchText) ? d
-                    .Completion("suggestion", c => c
-                        .Size(10)
-                        .Prefix(searchText)
-                        .Field("completion_suggester")
-                        .Contexts(ctxs => ctxs
-                            .Context("criteriaType", ctx => ctx
-                                .Context(criteriaCategory)))
-                    ) : null));
-
-        var response = new HttpProxyResponse<IEnumerable<Models.Criteria>>()
-        {
-            StatusCode = (System.Net.HttpStatusCode)esResponse.ApiCall.HttpStatusCode,
-            IsSuccessStatusCode = (esResponse.ApiCall.HttpStatusCode <= 299)
-        };
-
-        if (!response.IsSuccessStatusCode)
-        {
-            response.Message = JsonSerializer.Serialize(esResponse.OriginalException);
-            response.Content = null;
-            return response;
-        }
-
-        response.Message = "Success";
-        if (!esResponse.IsValid)
-        {
-            this._logger.LogError($"Error in Elasticsearch for criteria typeahead: {response.Message}");
-            response.Content = null;
-            return response;
-        }
-
-        if ((!string.IsNullOrEmpty(searchText) && esResponse.Suggest["suggestion"] == null) ||
-            (!string.IsNullOrEmpty(searchText) && !esResponse.Suggest["suggestion"].Any()))
-        {
-            response.Content = null;
-        }
-        else
-        {
-            var suggestion = (!string.IsNullOrEmpty(searchText) && esResponse.Suggest.ContainsKey("suggestion"))
-                ? esResponse.Suggest["suggestion"]
-                    .FirstOrDefault()
-                    ?.Options
-                    .Select(n => new Models.Criteria()
-                    {
-                        Id = n.Source.CriteriaId,
-                        Code = n.Source.ProcedureCode,
-                        Description = n.Source.Description,
-                        Score = n.Score,
-                        CriteriaTypeId = n.Source.CriteriaTypeId,
-                        Took = esResponse.Took,
-                        RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties
-                        // Do not set IsServiceRequest here; it’s already filtered in the query
-                    })
-                    .OrderByDescending(o => o.Score)
-                    .ThenBy(t => t.Description)
-                    .ToList()
-                : new List<Models.Criteria>();
-
-            var hits = esResponse.Hits.Select(s => new Models.Criteria()
+        "_index": "criteria_typeahead",
+        "_id": "180070",
+        "_score": 6.378924,
+        "_source": {
+          "criteriaId": 180070,
+          "criteriaTypeId": 1,
+          "description": "Lumbar Radiculopathy",
+          "conditionCategory": "Musculoskeletal",
+          "isServiceRequest": true,
+          "criteriaType": [
+            "Parent",
+            "Condition",
+            "All"
+          ],
+          "synonyms": [
+            "Lumbar Radiculopathy"
+          ],
+          "completion_suggester": [
             {
-                Id = s.Source.CriteriaId,
-                Code = s.Source.ProcedureCode,
-                Description = s.Source.Description,
-                Score = 1,
-                CriteriaTypeId = s.Source.CriteriaTypeId,
-                Took = esResponse.Took,
-                RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties
-                // Do not set IsServiceRequest here; it’s already filtered in the query
-            }).ToList();
-
-            var combined = hits.Concat(suggestion).ToList();
-            var newCombined = new List<Models.Criteria>();
-            foreach (var x in combined)
-            {
-                if (newCombined.FirstOrDefault(f => f.Id == x.Id) == null)
-                {
-                    newCombined.Add(x);
-                }
+              "input": "Lumbar Radiculopathy",
+              "contexts": {
+                "criteriaType": [
+                  "Parent",
+                  "Condition",
+                  "All"
+                ]
+              }
             }
-
-            response.Content = newCombined;
+          ],
+          "confirmedCriteriaSpecialties": [],
+          "relatedCriteriaSpecialties": []
         }
-
-        return response;
-    }
-    catch (Exception ex)
-    {
-        throw;
-    }
-}
+      }

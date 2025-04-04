@@ -3,13 +3,20 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
     try
     {
         var esResponse = await this._esClient._client
-            .SearchAsync<Entities.Elastic.Criterias.Criteria>(s => s
+            .SearchAsync<Entities.Elastic.Criterias.Criteria二次Criteria>(s => s
                 .Index("criteria_typeahead")
                 .Query(q => q
                     .Bool(b =>
                     {
                         // Start with an empty Must list
                         var mustClauses = new List<QueryContainer>();
+
+                        // Always filter for isServiceRequest = true
+                        mustClauses.Add(new TermQuery
+                        {
+                            Field = "isServiceRequest", // Adjust field name if different
+                            Value = true
+                        });
 
                         // Nested conditionals for criteriaCategory
                         if (!string.IsNullOrEmpty(criteriaCategory))
@@ -45,7 +52,8 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
                             });
                         }
 
-                        b.Must(mustClauses);
+                        // Pass the mustClauses as an array to Must()
+                        b.Must(mustClauses.ToArray());
                         return b;
                     }))
                 // Suggestions only if searchText is not empty
@@ -99,8 +107,8 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
                         Score = n.Score,
                         CriteriaTypeId = n.Source.CriteriaTypeId,
                         Took = esResponse.Took,
-                        RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties,
-                        IsServiceRequest = true // Always true
+                        RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties
+                        // Do not set IsServiceRequest here; it’s already filtered in the query
                     })
                     .OrderByDescending(o => o.Score)
                     .ThenBy(t => t.Description)
@@ -115,8 +123,8 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
                 Score = 1,
                 CriteriaTypeId = s.Source.CriteriaTypeId,
                 Took = esResponse.Took,
-                RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties,
-                IsServiceRequest = true // Always true
+                RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties
+                // Do not set IsServiceRequest here; it’s already filtered in the query
             }).ToList();
 
             var combined = hits.Concat(suggestion).ToList();
@@ -139,8 +147,3 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
         throw;
     }
 }
-
-b.Must(mustClauses);
-Argument 1: cannot convert from 'System.Collections.Generic.List<OpenSearch.Client.QueryContainer>' to 'System.Func<OpenSearch.Client.QueryContainerDescriptor<TypeaheadService.Entities.Elastic.Criterias.Criteria>, OpenSearch.Client.QueryContainer>'CS1503
-
-Also, we are not setting isServiceRequest to true like you do here IsServiceRequest = true. We just need to make sure that every data we select already has isServiceRequest set to true

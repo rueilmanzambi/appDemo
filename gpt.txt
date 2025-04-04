@@ -134,3 +134,15 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(
         throw;
     }
 }
+
+Must = mustQueries,
+Cannot implicitly convert type 'System.Collections.Generic.List<System.Func<OpenSearch.Client.QueryContainerDescriptor<TypeaheadService.Entities.Elastic.Criterias.Criteria>, OpenSearch.Client.QueryContainer>>' to 'System.Collections.Generic.IEnumerable<OpenSearch.Client.QueryContainer>'. An explicit conversion exists (are you missing a cast?)CS0266
+
+
+Should = shouldQueries.Any() ? shouldQueries : null
+Cannot implicitly convert type 'System.Collections.Generic.List<System.Func<OpenSearch.Client.QueryContainerDescriptor<TypeaheadService.Entities.Elastic.Criterias.Criteria>, OpenSearch.Client.QueryContainer>>' to 'System.Collections.Generic.IEnumerable<OpenSearch.Client.QueryContainer>'. An explicit conversion exists (are you missing a cast?)CS0266
+
+'CompletionSuggester' does not contain a definition for 'Field'CS0117
+'CompletionSuggester' does not contain a definition for 'Prefix'CS0117
+'CompletionSuggester' does not contain a definition for 'Size'CS0117
+Cannot implicitly convert type 'System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>' to 'Context'CS0029

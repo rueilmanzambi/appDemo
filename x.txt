@@ -139,3 +139,8 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
         throw;
     }
 }
+
+b.Must(mustClauses);
+Argument 1: cannot convert from 'System.Collections.Generic.List<OpenSearch.Client.QueryContainer>' to 'System.Func<OpenSearch.Client.QueryContainerDescriptor<TypeaheadService.Entities.Elastic.Criterias.Criteria>, OpenSearch.Client.QueryContainer>'CS1503
+
+Also, we are not setting isServiceRequest to true like you do here IsServiceRequest = true. We just need to make sure that every data we select already has isServiceRequest set to true

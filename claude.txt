@@ -169,3 +169,12 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(stri
         throw;
     }
 }
+
+
+
+
+'IEnumerable<QueryContainer>' does not contain a definition for 'Add' and the best extension method overload 'ApplicationModelConventionExtensions.Add(IList<IApplicationModelConvention>, IControllerModelConvention)' requires a receiver of type 'System.Collections.Generic.IList<Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelConvention>'CS1929
+
+'IEnumerable<QueryContainer>' does not contain a definition for 'Add' and the best extension method overload 'ApplicationModelConventionExtensions.Add(IList<IApplicationModelConvention>, IControllerModelConvention)' requires a receiver of type 'System.Collections.Generic.IList<Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelConvention>'CS1929
+
+Also, we are not setting isServiceRequest to true like you do here IsServiceRequest = true. We just need to make sure that every data we select already has isServiceRequest set to true

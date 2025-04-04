@@ -136,3 +136,10 @@ public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(
         throw;
     }
 }
+
+
+  var queryDescriptor = s.Index("criteria_typeahead").Query(q => q.Bool(b =>
+                {
+Not all code paths return a value in lambda expression of type 'Func<BoolQueryDescriptor<Criteria>, IBoolQuery>'CS1643
+
+Also, we are not setting isServiceRequest to true like you do here IsServiceRequest = true. We just need to make sure that every data we select already has isServiceRequest set to true

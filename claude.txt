@@ -1,0 +1,171 @@
+public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(string searchText, string criteriaCategory, string conditionCategory)
+{
+    try
+    {
+        var searchDescriptor = new SearchDescriptor<Entities.Elastic.Criterias.Criteria>()
+            .Index("criteria_typeahead");
+
+        // Build the query with necessary conditions
+        var boolQuery = new BoolQuery();
+        
+        // Add criteriaCategory filter when not empty
+        if (!string.IsNullOrEmpty(criteriaCategory))
+        {
+            boolQuery.Must.Add(new TermsQuery
+            {
+                Field = "criteriaType",
+                Terms = new[] { criteriaCategory }
+            });
+        }
+        
+        // Add conditionCategory filter when not empty
+        if (!string.IsNullOrEmpty(conditionCategory))
+        {
+            boolQuery.Must.Add(new TermsQuery
+            {
+                Field = "conditionType",
+                Terms = new[] { conditionCategory }
+            });
+        }
+        
+        // Always include isServiceRequest = true filter
+        boolQuery.Must.Add(new TermQuery
+        {
+            Field = "isServiceRequest",
+            Value = true
+        });
+        
+        // Add searchText condition when not empty
+        if (!string.IsNullOrEmpty(searchText))
+        {
+            var searchTextQuery = new BoolQuery();
+            searchTextQuery.Should.Add(new MatchQuery
+            {
+                Field = "description",
+                Query = searchText
+            });
+            searchTextQuery.Should.Add(new MatchQuery
+            {
+                Field = "synonyms",
+                Query = searchText
+            });
+            
+            boolQuery.Must.Add(searchTextQuery);
+        }
+        
+        // Apply the query
+        searchDescriptor = searchDescriptor.Query(q => q.Bool(b => b.MustNot(mn => mn.Exists(e => e.Field("deletedAt")))));
+        searchDescriptor = searchDescriptor.Query(q => boolQuery);
+        
+        // Add suggestions only when searchText is not empty
+        if (!string.IsNullOrEmpty(searchText))
+        {
+            var suggestionContext = new Dictionary<string, object>();
+            
+            if (!string.IsNullOrEmpty(criteriaCategory))
+            {
+                suggestionContext.Add("criteriaType", criteriaCategory);
+            }
+            
+            if (!string.IsNullOrEmpty(conditionCategory))
+            {
+                suggestionContext.Add("conditionType", conditionCategory);
+            }
+            
+            searchDescriptor = searchDescriptor.Suggest(d => d
+                .Completion("suggestion", c => c
+                    .Size(10)
+                    .Prefix(searchText)
+                    .Field("completion_suggester")
+                    .Contexts(ctxs => 
+                    {
+                        foreach (var context in suggestionContext)
+                        {
+                            ctxs = ctxs.Context(context.Key, ctx => ctx.Context(context.Value.ToString()));
+                        }
+                        return ctxs;
+                    })));
+        }
+        
+        var esResponse = await this._esClient._client.SearchAsync<Entities.Elastic.Criterias.Criteria>(searchDescriptor);
+
+        var response = new HttpProxyResponse<IEnumerable<Models.Criteria>>()
+        {
+            StatusCode = (System.Net.HttpStatusCode)esResponse.ApiCall.HttpStatusCode,
+            IsSuccessStatusCode = (esResponse.ApiCall.HttpStatusCode <= 299)
+        };
+
+        if (!response.IsSuccessStatusCode)
+        {
+            response.Message = JsonSerializer.Serialize(esResponse.OriginalException);
+            response.Content = null;
+            return response;
+        }
+
+        response.Message = "Success";
+        if (!esResponse.IsValid)
+        {
+            this._logger.LogError($"Error in Elasticsearch for criteria typeahead: {response.Message}");
+            response.Content = null;
+            return response;
+        }
+
+        var hits = esResponse.Hits.Select(s => new Models.Criteria()
+        {
+            Id = s.Source.CriteriaId,
+            Code = s.Source.ProcedureCode,
+            Description = s.Source.Description,
+            Score = 1,
+            CriteriaTypeId = s.Source.CriteriaTypeId,
+            Took = esResponse.Took,
+            RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties,
+            IsServiceRequest = true // Ensure all results have isServiceRequest set to true
+        }).ToList();
+
+        // Process suggestions only when searchText is not empty
+        var suggestion = new List<Models.Criteria>();
+        if (!string.IsNullOrEmpty(searchText) && 
+            esResponse.Suggest != null && 
+            esResponse.Suggest.ContainsKey("suggestion") && 
+            esResponse.Suggest["suggestion"].Any())
+        {
+            suggestion = esResponse
+                .Suggest["suggestion"]
+                .FirstOrDefault()
+                .Options
+                .Select(n => new Models.Criteria()
+                {
+                    Id = n.Source.CriteriaId,
+                    Code = n.Source.ProcedureCode,
+                    Description = n.Source.Description,
+                    Score = n.Score,
+                    CriteriaTypeId = n.Source.CriteriaTypeId,
+                    Took = esResponse.Took,
+                    RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties,
+                    IsServiceRequest = true // Ensure all results have isServiceRequest set to true
+                })
+                .OrderByDescending(o => o.Score)
+                .ThenBy(t => t.Description)
+                .ToList();
+        }
+
+        // Combine and deduplicate results
+        var combined = hits.Concat(suggestion).ToList();
+        var newCombined = new List<Models.Criteria>();
+        foreach (var x in combined)
+        {
+            if (newCombined.FirstOrDefault(f => f.Id == x.Id) == null)
+            {
+                newCombined.Add(x);
+            }
+        }
+
+        response.Content = newCombined;
+        return response;
+    }
+    catch (Exception ex)
+    {
+        this._logger.LogError($"Error in GetAsync: {ex.Message}", ex);
+        throw;
+    }
+}

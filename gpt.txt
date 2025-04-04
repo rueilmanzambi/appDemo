@@ -1,0 +1,136 @@
+public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(
+    string searchText,
+    string criteriaCategory,
+    string conditionCategory)
+{
+    try
+    {
+        var mustQueries = new List<Func<QueryContainerDescriptor<Entities.Elastic.Criterias.Criteria>, QueryContainer>>();
+
+        // Always filter by isServiceRequest
+        mustQueries.Add(mq => mq.Term(t => t.Field("isServiceRequest").Value(true)));
+
+        // Always filter by criteriaCategory
+        mustQueries.Add(mq => mq.Term(t => t.Field("criteriaType").Value(criteriaCategory)));
+
+        // Conditionally filter by conditionCategory
+        if (!string.IsNullOrWhiteSpace(conditionCategory))
+        {
+            mustQueries.Add(mq => mq.Term(t => t.Field("conditionCategory").Value(conditionCategory)));
+        }
+
+        // Conditionally search by searchText
+        var shouldQueries = new List<Func<QueryContainerDescriptor<Entities.Elastic.Criterias.Criteria>, QueryContainer>>();
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            shouldQueries.Add(sq => sq.Match(m => m.Field("description").Query(searchText)));
+            shouldQueries.Add(sq => sq.Match(m => m.Field("synonyms").Query(searchText)));
+        }
+
+        var esRequest = new SearchRequest<Entities.Elastic.Criterias.Criteria>("criteria_typeahead")
+        {
+            Query = new BoolQuery
+            {
+                Must = mustQueries,
+                Should = shouldQueries.Any() ? shouldQueries : null
+            }
+        };
+
+        // Add suggestion block only if searchText is provided
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            esRequest.Suggest = new SuggestContainer
+            {
+                { 
+                    "suggestion", new SuggestBucket
+                    {
+                        Completion = new CompletionSuggester
+                        {
+                            Field = "completion_suggester",
+                            Prefix = searchText,
+                            Size = 10,
+                            Contexts = new Dictionary<string, IEnumerable<string>>
+                            {
+                                { "criteriaType", new[] { criteriaCategory } }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        var esResponse = await this._esClient._client.SearchAsync<Entities.Elastic.Criterias.Criteria>(esRequest);
+
+        var response = new HttpProxyResponse<IEnumerable<Models.Criteria>>
+        {
+            StatusCode = (System.Net.HttpStatusCode)esResponse.ApiCall.HttpStatusCode,
+            IsSuccessStatusCode = esResponse.ApiCall.HttpStatusCode <= 299
+        };
+
+        if (!response.IsSuccessStatusCode)
+        {
+            response.Message = JsonSerializer.Serialize(esResponse.OriginalException);
+            response.Content = null;
+            return response;
+        }
+
+        response.Message = "Success";
+
+        if (!esResponse.IsValid)
+        {
+            this._logger.LogError($"Error in Elasticsearch for criteria typeahead: {response.Message}");
+            response.Content = null;
+            return response;
+        }
+
+        // Process suggestions (if present)
+        var suggestionResults = new List<Models.Criteria>();
+        if (!string.IsNullOrWhiteSpace(searchText) &&
+            esResponse.Suggest.TryGetValue("suggestion", out var suggestBucket) &&
+            suggestBucket.Any())
+        {
+            suggestionResults = suggestBucket
+                .First()
+                .Options
+                .Select(n => new Models.Criteria
+                {
+                    Id = n.Source.CriteriaId,
+                    Code = n.Source.ProcedureCode,
+                    Description = n.Source.Description,
+                    Score = n.Score,
+                    CriteriaTypeId = n.Source.CriteriaTypeId,
+                    Took = esResponse.Took,
+                    RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties
+                })
+                .OrderByDescending(o => o.Score)
+                .ThenBy(t => t.Description)
+                .ToList();
+        }
+
+        // Process hits
+        var hits = esResponse.Hits.Select(s => new Models.Criteria
+        {
+            Id = s.Source.CriteriaId,
+            Code = s.Source.ProcedureCode,
+            Description = s.Source.Description,
+            Score = 1,
+            CriteriaTypeId = s.Source.CriteriaTypeId,
+            Took = esResponse.Took,
+            RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties
+        }).ToList();
+
+        // Combine & dedupe
+        var combined = hits.Concat(suggestionResults)
+            .GroupBy(x => x.Id)
+            .Select(g => g.First())
+            .ToList();
+
+        response.Content = combined;
+        return response;
+    }
+    catch (Exception ex)
+    {
+        this._logger.LogError(ex, "Unhandled error in GetAsync()");
+        throw;
+    }
+}

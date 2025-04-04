@@ -1,0 +1,138 @@
+public async Task<HttpProxyResponse<IEnumerable<Models.Criteria>>> GetAsync(
+    string searchText, 
+    string criteriaCategory, 
+    string conditionCategory)
+{
+    try
+    {
+        // Build the Elasticsearch query dynamically based on input conditions
+        var esResponse = await this._esClient._client
+            .SearchAsync<Entities.Elastic.Criterias.Criteria>(s =>
+            {
+                var queryDescriptor = s.Index("criteria_typeahead").Query(q => q.Bool(b =>
+                {
+                    // Add base condition: all results must have `isServiceRequest` set to true
+                    b.Filter(f => f.Term(t => t.Field("isServiceRequest").Value(true)));
+
+                    // Include criteriaCategory if it is not empty
+                    if (!string.IsNullOrEmpty(criteriaCategory))
+                    {
+                        b.Must(m => m.Terms(t => t.Field("criteriaType").Terms(criteriaCategory)));
+                    }
+
+                    // Include conditionCategory if it is not empty
+                    if (!string.IsNullOrEmpty(conditionCategory))
+                    {
+                        b.Must(m => m.Terms(t => t.Field("conditionType").Terms(conditionCategory)));
+                    }
+
+                    // Include searchText in match queries only if it is not empty
+                    if (!string.IsNullOrEmpty(searchText))
+                    {
+                        b.Must(m =>
+                            m.Bool(bb => bb.Should(s =>
+                                s.Match(mm => mm.Field("description").Query(searchText)) ||
+                                s.Match(mm => mm.Field("synonyms").Query(searchText)))));
+                    }
+
+                }));
+
+                // Add suggestions only if searchText is not empty
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    queryDescriptor.Suggest(d => d.Completion("suggestion", c => c
+                        .Size(10)
+                        .Prefix(searchText)
+                        .Field("completion_suggester")
+                        .Contexts(ctxs => ctxs.Context("criteriaType", ctx => ctx.Context(criteriaCategory)))));
+                }
+
+                return queryDescriptor;
+            });
+
+        // Build the response object
+        var response = new HttpProxyResponse<IEnumerable<Models.Criteria>>()
+        {
+            StatusCode = (System.Net.HttpStatusCode)esResponse.ApiCall.HttpStatusCode,
+            IsSuccessStatusCode = (esResponse.ApiCall.HttpStatusCode <= 299)
+        };
+
+        if (!response.IsSuccessStatusCode)
+        {
+            response.Message = JsonSerializer.Serialize(esResponse.OriginalException);
+            response.Content = null;
+            return response;
+        }
+
+        response.Message = "Success";
+        if (!esResponse.IsValid)
+        {
+            this._logger.LogError($"Error in Elasticsearch for criteria typeahead: {response.Message}");
+            response.Content = null;
+            return response;
+        }
+
+        // Process hits (search results)
+        var hits = esResponse.Hits.Select(s => new Models.Criteria()
+        {
+            Id = s.Source.CriteriaId,
+            Code = s.Source.ProcedureCode,
+            Description = s.Source.Description,
+            Score = 1,
+            CriteriaTypeId = s.Source.CriteriaTypeId,
+            Took = esResponse.Took,
+            RelatedCriteriaSpecialties = s.Source.RelatedCriteriaSpecialties,
+            IsServiceRequest = true // Ensure this field is set to true for all results
+        }).ToList();
+
+        List<Models.Criteria> combinedResults;
+
+        // Process suggestions only if searchText is not empty and suggestions exist
+        if (!string.IsNullOrEmpty(searchText) && esResponse.Suggest["suggestion"] != null &&
+            esResponse.Suggest["suggestion"].Any())
+        {
+            var suggestions = esResponse.Suggest["suggestion"]
+                .FirstOrDefault()
+                .Options
+                .Select(n => new Models.Criteria()
+                {
+                    Id = n.Source.CriteriaId,
+                    Code = n.Source.ProcedureCode,
+                    Description = n.Source.Description,
+                    Score = n.Score,
+                    CriteriaTypeId = n.Source.CriteriaTypeId,
+                    Took = esResponse.Took,
+                    RelatedCriteriaSpecialties = n.Source.RelatedCriteriaSpecialties,
+                    IsServiceRequest = true // Ensure this field is set to true for all results
+                })
+                .OrderByDescending(o => o.Score)
+                .ThenBy(t => t.Description)
+                .ToList();
+
+            combinedResults = hits.Concat(suggestions).ToList();
+        }
+        else
+        {
+            combinedResults = hits; // Only include hits when searchText is empty or no suggestions exist
+        }
+
+        // Remove duplicates based on Criteria ID
+        var uniqueResults = new List<Models.Criteria>();
+        foreach (var result in combinedResults)
+        {
+            if (uniqueResults.FirstOrDefault(f => f.Id == result.Id) == null)
+            {
+                uniqueResults.Add(result);
+            }
+        }
+
+        response.Content = uniqueResults;
+
+        return response;
+    }
+    catch (Exception ex)
+    {
+        this._logger.LogError($"An error occurred: {ex.Message}");
+        throw;
+    }
+}
